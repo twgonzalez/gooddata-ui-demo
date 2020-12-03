@@ -28,14 +28,11 @@ const DashboardMain= () => {
     const totalTransactionsPrevious = newPreviousPeriodMeasure(totalTransactions, [{dataSet: DATASET, periodsAgo: 1}],  m => m.alias("Previous Period"));
 
     // We use this to set up our 
-    const availableGranularities = ["GDC.time.date", "GDC.time.month", "GDC.time.quarter", "GDC.time.year"];
     const [dateFilterOptions, setDateFilterOptions]  = useState(defaultDateFilterOptions.allTime);
-    const [excludeCurrentPeriod, setExcludeCurrentPeriod] = useState(false);
     const [timePeriodLabel, setTimePeriodLabel] = useState("all time");
 
-    const onApplyDateFilter = (dateFilterOption, excludeCurrentPeriod) => {
+    const onApplyDateFilter = (dateFilterOption) => {
         setDateFilterOptions(dateFilterOption);
-        setExcludeCurrentPeriod(excludeCurrentPeriod);
         setTimePeriodLabel(String(dateFilterOption.localIdentifier.replace(/_/g,' ')).toLowerCase());
     };
 
@@ -44,18 +41,16 @@ const DashboardMain= () => {
         {
             identifier: DATASET,
         },
-        excludeCurrentPeriod,
-    );
+        false
+    ); 
 
     return (
         <div className={styles.DashboardMain}>
             <div className={styles.Filters}>
                 <div className={styles.DateFilterGroup}>
                 <DateFilter
-                    excludeCurrentPeriod={excludeCurrentPeriod}
                     selectedFilterOption={dateFilterOptions}
                     filterOptions={defaultDateFilterOptions}
-                    availableGranularities={availableGranularities}
                     customFilterName="Select a Date Range"
                     dateFilterMode="active"
                     onApply={onApplyDateFilter}
