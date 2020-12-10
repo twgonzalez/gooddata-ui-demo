@@ -34,38 +34,31 @@ const DashboardMain = ({ dimensionItem }) => {
 
     // We enumerate all of the measures we want to display in our headline components, as well as their corresponding previous
     // period measures.
-    const totalSales = Ldm.TotalSales;
-    const totalSalesPrevious = newPreviousPeriodMeasure(
-        totalSales,
+    const revenue = Ldm.Revenue;
+    const revenuePrevious = newPreviousPeriodMeasure(revenue, [{ dataSet: DATASET, periodsAgo: 1 }], m =>
+        m.alias("Previous Period"),
+    );
+
+    const orders = Ldm.NrOrdersValid;
+    const ordersPrevious = newPreviousPeriodMeasure(orders, [{ dataSet: DATASET, periodsAgo: 1 }], m =>
+        m.alias("Previous Period"),
+    );
+
+    const returnRevenue = Ldm.RevenueReturns;
+    const returnRevenuePrevious = newPreviousPeriodMeasure(
+        returnRevenue,
         [{ dataSet: DATASET, periodsAgo: 1 }],
         m => m.alias("Previous Period"),
     );
 
-    const totalProfit = Ldm.TotalProfit;
-    const totalProfitPrevious = newPreviousPeriodMeasure(
-        totalProfit,
-        [{ dataSet: DATASET, periodsAgo: 1 }],
-        m => m.alias("Previous Period"),
+    const returns = Ldm.NrOrdersReturns;
+    const returnsPrevious = newPreviousPeriodMeasure(returns, [{ dataSet: DATASET, periodsAgo: 1 }], m =>
+        m.alias("Previous Period"),
     );
-
-    const totalReturns = Ldm.TotalReturnAmount;
-    const totalReturnsPrevious = newPreviousPeriodMeasure(
-        totalReturns,
-        [{ dataSet: DATASET, periodsAgo: 1 }],
-        m => m.alias("Previous Period"),
-    );
-
-    const totalTransactions = Ldm.CountOfTransactions;
-    const totalTransactionsPrevious = newPreviousPeriodMeasure(
-        totalTransactions,
-        [{ dataSet: DATASET, periodsAgo: 1 }],
-        m => m.alias("Previous Period"),
-    );
-
-    const [selectedMeasure, setSelectedMeasure] = useState(totalSales);
+    const [selectedMeasure, setSelectedMeasure] = useState(revenue);
 
     // We use these constants to set up our date filter
-    const availableGranularities = ["GDC.time.date", "GDC.time.month", "GDC.time.quarter", "GDC.time.year"];
+    //   const availableGranularities = ["GDC.time.date", "GDC.time.month", "GDC.time.quarter", "GDC.time.year"];
     const [dateFilterOptions, setDateFilterOptions] = useState(defaultDateFilterOptions.allTime);
     const [excludeCurrentPeriod, setExcludeCurrentPeriod] = useState(false);
 
@@ -110,7 +103,13 @@ const DashboardMain = ({ dimensionItem }) => {
         const newFilter = newPositiveAttributeFilter(filter.dimension, [
             drillDimension.attributeHeaderItem.name,
         ]);
-        setFilter({ attributeFilter: newFilter, dimension: Ldm.ProductID.ProductName });
+        const newDimension =
+            dimensionItem.dimension === Ldm.ProductCategory
+                ? Ldm.Product.Default
+                : dimensionItem.dimension === Ldm.CustomerRegion
+                ? Ldm.CustomerState
+                : Ldm.CampaignName;
+        setFilter({ attributeFilter: newFilter, dimension: newDimension });
         setBreadCrumbItems([
             dimensionItem,
             { label: drillDimension.attributeHeaderItem.name, dimension: null, icon: null },
@@ -123,7 +122,7 @@ const DashboardMain = ({ dimensionItem }) => {
         const newFilter = newPositiveAttributeFilter(filter.dimension, [
             drillDimension.attributeHeaderItem.name,
         ]);
-        setFilter({ attributeFilter: newFilter, dimension: Ldm.ProductID.ProductName });
+        setFilter({ attributeFilter: newFilter, dimension: Ldm.Product.Default });
         setBreadCrumbItems([
             dimensionItem,
             { label: drillDimension.attributeHeaderItem.name, dimension: null, icon: null },
@@ -132,9 +131,10 @@ const DashboardMain = ({ dimensionItem }) => {
 
     const isDrillable = () => {
         console.log("checking to see if we can drill");
+        debugger;
         return (
-            filter.dimension.attribute.localIdentifier === Ldm.ProductBrand.attribute.localIdentifier ||
-            filter.dimension.attribute.localIdentifier === Ldm.ProductCategory.attribute.localIdentifier
+            filter.dimension.attribute.localIdentifier === Ldm.ProductCategory.attribute.localIdentifier ||
+            filter.dimension.attribute.localIdentifier === Ldm.CustomerRegion.attribute.localIdentifier
         );
     };
 
@@ -157,65 +157,65 @@ const DashboardMain = ({ dimensionItem }) => {
                     />
                 </div>
                 <div className={styles.DateFilterGroup}>
+                    <div className={styles.DateIcon}>
+                        <DateRangeIcon fontSize="large" />
+                    </div>
                     <div>
                         <DateFilter
                             excludeCurrentPeriod={excludeCurrentPeriod}
                             selectedFilterOption={dateFilterOptions}
                             filterOptions={defaultDateFilterOptions}
-                            availableGranularities={availableGranularities}
                             customFilterName="Select a Date Range"
                             dateFilterMode="active"
                             onApply={onApplyDateFilter}
                         />
                     </div>
-                    <div className={styles.DateIcon}>
-                        <DateRangeIcon fontSize="large" />
-                    </div>
                 </div>
             </div>
+
             <div className={styles.KPIs}>
                 <div
-                    className={cx(styles.KPI, selectedMeasure === totalSales ? styles.Active : null)}
-                    onClick={e => changeMeasure(totalSales)}
+                    className={cx(styles.KPI, selectedMeasure === revenue ? styles.Active : null)}
+                    onClick={e => changeMeasure(revenue)}
                 >
-                    <span className={styles.Title}>Total Sales</span>
+                    <span className={styles.Title}>Revenue</span>
                     <Headline
-                        primaryMeasure={totalSales}
-                        secondaryMeasure={totalSalesPrevious}
-                        filters={[dateFilter, filter.attributeFilter]}
+                        primaryMeasure={revenue}
+                        secondaryMeasure={revenuePrevious}
+                        filters={dateFilter ? [dateFilter] : []}
                     />
                 </div>
                 <div
-                    className={cx(styles.KPI, selectedMeasure === totalProfit ? styles.Active : null)}
-                    onClick={e => changeMeasure(totalProfit)}
+                    className={cx(styles.KPI, selectedMeasure === orders ? styles.Active : null)}
+                    onClick={e => changeMeasure(orders)}
                 >
-                    <span className={styles.Title}>Total Profit</span>
+                    <span className={styles.Title}>Orders</span>
                     <Headline
-                        primaryMeasure={totalProfit}
-                        secondaryMeasure={totalProfitPrevious}
-                        filters={[dateFilter, filter.attributeFilter]}
+                        primaryMeasure={orders}
+                        secondaryMeasure={ordersPrevious}
+                        filters={dateFilter ? [dateFilter] : []}
                     />
                 </div>
                 <div
-                    className={cx(styles.KPI, selectedMeasure === totalReturns ? styles.Active : null)}
-                    onClick={e => changeMeasure(totalReturns)}
+                    className={cx(styles.KPI, selectedMeasure === returnRevenue ? styles.Active : null)}
+                    onClick={e => changeMeasure(returnRevenue)}
                 >
-                    <span className={styles.Title}>Total Returns</span>
+                    <span className={styles.Title}>Return Amount</span>
                     <Headline
-                        primaryMeasure={totalReturns}
-                        secondaryMeasure={totalReturnsPrevious}
-                        filters={[dateFilter, filter.attributeFilter]}
+                        primaryMeasure={returnRevenue}
+                        secondaryMeasure={returnRevenuePrevious}
+                        filters={dateFilter ? [dateFilter] : []}
                     />
                 </div>
                 <div
-                    className={cx(styles.KPI, selectedMeasure === totalTransactions ? styles.Active : null)}
-                    onClick={e => changeMeasure(totalTransactions)}
+                    className={cx(styles.KPI, selectedMeasure === returns ? styles.Active : null)}
+                    onClick={e => changeMeasure(returns)}
                 >
-                    <span className={styles.Title}>Total Transactions</span>
+                    <span className={styles.Title}>Returns</span>
                     <Headline
-                        primaryMeasure={totalTransactions}
-                        secondaryMeasure={totalTransactionsPrevious}
-                        filters={[dateFilter, filter.attributeFilter]}
+                        primaryMeasure={returns}
+                        secondaryMeasure={returnsPrevious}
+                        filters={dateFilter ? [dateFilter] : []}
                     />
                 </div>
             </div>
@@ -236,15 +236,10 @@ const DashboardMain = ({ dimensionItem }) => {
 
             <div className={styles.Table}>
                 <PivotTable
-                    measures={[
-                        Ldm.TotalSales,
-                        Ldm.TotalProfit,
-                        Ldm.TotalReturnAmount,
-                        Ldm.CountOfTransactions,
-                    ]}
+                    measures={[Ldm.Revenue, Ldm.NrOfValidOrders, Ldm.RevenueReturns, Ldm.NrOrdersReturns]}
                     rows={
-                        filter.dimension === Ldm.UserCountry
-                            ? [Ldm.UserCountry, Ldm.UserState]
+                        filter.dimension === Ldm.CustomerRegion
+                            ? [Ldm.CustomerRegion, Ldm.CustomerState]
                             : [filter.dimension]
                     }
                     config={{
@@ -257,12 +252,12 @@ const DashboardMain = ({ dimensionItem }) => {
                     drillableItems={
                         isDrillable()
                             ? [
-                                  HeaderPredicates.localIdentifierMatch(totalSales.measure.localIdentifier),
-                                  HeaderPredicates.localIdentifierMatch(totalProfit.measure.localIdentifier),
-                                  HeaderPredicates.localIdentifierMatch(totalReturns.measure.localIdentifier),
+                                  HeaderPredicates.localIdentifierMatch(revenue.measure.localIdentifier),
+                                  HeaderPredicates.localIdentifierMatch(orders.measure.localIdentifier),
                                   HeaderPredicates.localIdentifierMatch(
-                                      totalTransactions.measure.localIdentifier,
+                                      returnRevenue.measure.localIdentifier,
                                   ),
+                                  HeaderPredicates.localIdentifierMatch(returns.measure.localIdentifier),
                               ]
                             : []
                     }
