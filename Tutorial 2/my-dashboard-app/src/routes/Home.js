@@ -6,7 +6,7 @@ const Home = () => {
 
     return (
         <Page>
-            Place your content here&hellip;test
+            Place your content here&hellip;
         </Page>
     );
 };
