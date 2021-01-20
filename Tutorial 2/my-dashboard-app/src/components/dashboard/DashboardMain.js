@@ -29,11 +29,9 @@ const DashboardMain= () => {
 
     // We use this to set up our 
     const [dateFilterOptions, setDateFilterOptions]  = useState(defaultDateFilterOptions.allTime);
-    const [timePeriodLabel, setTimePeriodLabel] = useState("all time");
 
     const onApplyDateFilter = (dateFilterOption) => {
         setDateFilterOptions(dateFilterOption);
-        setTimePeriodLabel(String(dateFilterOption.localIdentifier.replace(/_/g,' ')).toLowerCase());
     };
 
     const dateFilter = DateFilterHelpers.mapOptionToAfm(
@@ -47,9 +45,6 @@ const DashboardMain= () => {
     return (
         <div className={styles.DashboardMain}>
             <div className={styles.Filters}>
-                <div className={styles.BreadcrumbGroup}>
-                <span className={styles.Title}>{timePeriodLabel}</span>
-                 </div>
                 <div className={styles.DateFilterGroup}>
                 <DateFilter
                     selectedFilterOption={dateFilterOptions}

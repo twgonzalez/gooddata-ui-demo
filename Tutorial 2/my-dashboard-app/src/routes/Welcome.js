@@ -8,8 +8,6 @@ import styles from "./Welcome.module.scss";
 import kpiUri from "../media/kpi.png";
 import iUri from "../media/i.svg";
 import successUri from "../media/success.svg";
-import DashboardMain from "../components/dashboard/DashboardMain";
-import MyDashboard from "./MyDashboard";
 
 const linkProps = {
     target: "_blank",
@@ -35,7 +33,6 @@ const Blockquote = ({ children, ...restProps }) => (
 const Welcome = () => {
     return (
         <Page>
-            <MyDashboard/>
             <div className={styles.Lead}>
                 <h1>
                     <img src={successUri} alt="" />
