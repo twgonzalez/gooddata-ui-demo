@@ -130,8 +130,8 @@ const DashboardMain = ({ dimensionItem }) => {
     };
 
     const isDrillable = () => {
-        console.log("checking to see if we can drill");
-        debugger;
+       // console.log("checking to see if we can drill");
+       // debugger;
         return (
             filter.dimension.attribute.localIdentifier === Ldm.ProductCategory.attribute.localIdentifier ||
             filter.dimension.attribute.localIdentifier === Ldm.CustomerRegion.attribute.localIdentifier

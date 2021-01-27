@@ -1,18 +1,18 @@
 {
-    "name": "my-dashboard-app",
+    "name": "my-app",
     "version": "0.1.0",
     "private": true,
     "dependencies": {
-        "@gooddata/sdk-backend-bear": "^8.0.0",
-        "@gooddata/sdk-model": "^8.0.0",
-        "@gooddata/sdk-ui": "^8.0.0",
-        "@gooddata/sdk-ui-charts": "^8.0.0",
-        "@gooddata/sdk-ui-ext": "^8.0.0",
-        "@gooddata/sdk-ui-filters": "^8.0.0",
-        "@gooddata/sdk-ui-geo": "^8.0.0",
-        "@gooddata/sdk-ui-pivot": "^8.0.0",
-        "@material-ui/core": "^4.11.0",
-        "@material-ui/icons": "^4.9.1",
+        "@gooddata/sdk-backend-bear": "^8.1.0",
+        "@gooddata/sdk-model": "^8.1.0",
+        "@gooddata/sdk-ui": "^8.1.0",
+        "@gooddata/sdk-ui-charts": "^8.1.0",
+        "@gooddata/sdk-ui-ext": "^8.1.0",
+        "@gooddata/sdk-ui-filters": "^8.1.0",
+        "@gooddata/sdk-ui-geo": "^8.1.0",
+        "@gooddata/sdk-ui-pivot": "^8.1.0",
+        "@material-ui/core": "^4.11.2",
+        "@material-ui/icons": "^4.11.2",
         "classnames": "^2.2.6",
         "formik": "^1.5.7",
         "lodash": "^4.17.15",
@@ -34,10 +34,7 @@
         "testcafe-backend": "rm -R ./build & yarn build & serve -l 5000 build",
         "testcafe": "cross-env TEST_BACKEND=http://localhost:5000 ./scripts/run-testcafe.js",
         "testcafe-visual": "cross-env TEST_MODE=visual ./scripts/run-testcafe.js",
-        "refresh-ldm": "node ./scripts/refresh-ldm.js",
-        "buildgdJiri": "cross-env REACT_APP_SET_HOSTNAME=true PUBLIC_URL=/my-dashboard-app yarn build",
-        "buildgd": "cross-env REACT_APP_SET_HOSTNAME=true PUBLIC_URL=/my-dashboard-app react-scripts --max_old_space_size=4096 build",
-        "syncgd": "s3cmd --config .s3cfg sync --delete-removed ./build/ s3://gooddata-demo/my-dashboard-app/"
+        "refresh-ldm": "node ./scripts/refresh-ldm.js"
     },
     "eslintConfig": {
         "extends": "react-app"
@@ -56,7 +53,7 @@
     },
     "devDependencies": {
         "@babel/plugin-transform-typescript": "^7.9.6",
-        "@gooddata/catalog-export": "^8.0.0",
+        "@gooddata/catalog-export": "^8.1.0",
         "cross-env": "^5.2.0",
         "enzyme": "^3.10.0",
         "enzyme-adapter-react-16": "^1.14.0",
@@ -64,7 +61,7 @@
         "node-sass": "^4.13.1",
         "prettier": "^1.18.2",
         "pretty-quick": "^1.11.1",
-        "serve": "^11.3.2",
+        "serve": "^11.2.0",
         "testcafe": "^1.5.0"
     },
     "husky": {
