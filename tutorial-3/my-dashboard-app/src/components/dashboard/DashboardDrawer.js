@@ -10,7 +10,6 @@ import ListItemIcon from "@material-ui/core/ListItemIcon";
 import ListItemText from "@material-ui/core/ListItemText";
 import RegionIcon from "@material-ui/icons/Public";
 import CategoryIcon from "@material-ui/icons/Category";
-import BrandingIcon from "@material-ui/icons/BrandingWatermark";
 import DashboardIcon from "@material-ui/icons/Dashboard";
 import ExploreIcon from "@material-ui/icons/Explore";
 import * as Ldm from "../../ldm/full";

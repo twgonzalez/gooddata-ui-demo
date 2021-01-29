@@ -3,7 +3,7 @@
 body {
     margin: 0;
     text-rendering: optimizeLegibility;
-    font-family: $font-family;
+    font-family: $font-family !important;
 }
 
 a {

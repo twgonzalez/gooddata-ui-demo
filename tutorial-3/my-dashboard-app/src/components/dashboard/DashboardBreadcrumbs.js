@@ -30,6 +30,7 @@ const DashboardBreadcrumbs = ({ breadCrumbItems, onClick = () => {}, onDelete = 
             {breadCrumbItems.map((item, index) => (
                 <StyledBreadcrumb
                     component="a"
+                    key={item.label + index}
                     label={item.label}
                     icon={item.icon}
                     onClick={() => {

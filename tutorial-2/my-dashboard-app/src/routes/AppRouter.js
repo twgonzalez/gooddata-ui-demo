@@ -11,6 +11,7 @@ import MyDashboard from "./MyDashboard";
 import styles from "./AppRouter.module.scss";
 import { useAuth } from "../contexts/Auth";
 import { AuthStatus } from "../contexts/Auth/state";
+
 const RedirectIfNotLoggedIn = () => {
     const auth = useAuth();
     const shouldRedirectToLogin = auth.authStatus === AuthStatus.UNAUTHORIZED;
@@ -23,8 +24,8 @@ const AppRouter = () => {
             <Router>
                 {/* WorkspaceProvider depends on Router so it must be nested */}
                 <WorkspaceProvider>
-                    <Route exact path="/" component={Home} />
-                    <Route exact path="/welcome" component={Welcome} />
+                    <Route exact path="/" component={Welcome} />
+                    <Route exact path="/home" component={Home} />
                     <Route exact path="/my-dashboard" component={MyDashboard} />
                     <Route exact path="/login" component={Login} />
                     <Route exact path="/logout" component={Logout} />

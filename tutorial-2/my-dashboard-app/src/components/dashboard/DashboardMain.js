@@ -11,7 +11,7 @@ import "@gooddata/sdk-ui-filters/styles/css/main.css";
 const DashboardMain= () => {
 
     // This is used to identifiy the data set we will use for all date filtering - better explanatoin ??
-    const DATASET = "date.dataset.dt";
+    const DATASET = Ldm.DateDatasets;
 
     // We enumerate all of the measures we want to display in our headline components, as well as their corresponding previous
     // period measures.
@@ -28,14 +28,14 @@ const DashboardMain= () => {
     const returnsPrevious = newPreviousPeriodMeasure(returns, [{dataSet: DATASET, periodsAgo: 1}],  m => m.alias("Previous Period"));
 
     // We use this to set up our 
-    const [dateFilterOptions, setDateFilterOptions]  = useState(defaultDateFilterOptions.allTime);
+    const [dateFilterOption, setDateFilterOption]  = useState(defaultDateFilterOptions.allTime);
 
     const onApplyDateFilter = (dateFilterOption) => {
-        setDateFilterOptions(dateFilterOption);
+        setDateFilterOption(dateFilterOption);
     };
 
     const dateFilter = DateFilterHelpers.mapOptionToAfm(
-        dateFilterOptions,
+        dateFilterOption,
         {
             identifier: DATASET,
         },
@@ -47,7 +47,7 @@ const DashboardMain= () => {
             <div className={styles.Filters}>
                 <div className={styles.DateFilterGroup}>
                 <DateFilter
-                    selectedFilterOption={dateFilterOptions}
+                    selectedFilterOption={dateFilterOption}
                     filterOptions={defaultDateFilterOptions}
                     customFilterName="Select a Date Range"
                     dateFilterMode="active"
@@ -93,7 +93,7 @@ const DashboardMain= () => {
                  <InsightView insight={Ldm.Insights.RevenueByProductCategory} filters={dateFilter ? [dateFilter] : []}/>
             </div>
             <div className={styles.Table}>
-                <InsightView insight={Ldm.Insights.RevenueByProductCategoryTable} filters={dateFilter ? [dateFilter] : []}/>
+                <InsightView insight={Ldm.Insights.RevenueByProductCategoryTable} filters={dateFilter ? [dateFilter] : []} grow/>
             </div>
         </div>
     );

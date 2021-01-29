@@ -7,11 +7,11 @@ const Links = () => {
     return (
         <>
             <NavLink
-                to="/welcome"
+                to="/home"
                 className={cx(styles.Link, "s-welcome-link")}
                 activeClassName={styles.LinkActive}
             >
-                Welcome
+                Home
             </NavLink>
             <NavLink to={"/my-dashboard"} className={styles.Link} activeClassName={styles.LinkActive} exact>
                My Dashboard

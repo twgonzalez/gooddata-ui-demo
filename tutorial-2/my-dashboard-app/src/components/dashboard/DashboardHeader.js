@@ -24,19 +24,26 @@ const useStyles = makeStyles(theme => ({
     appBar: {
         zIndex: theme.zIndex.drawer + 1,
     },
+    shop: {
+        fontWeight: 800,
+    },
+    back: {
+        fontWeight: 300,
+        marginLeft: 3,
+    }
 }));
 
 const DashboardHeader = () => {
     const classes = useStyles();
     return (
-        <AppBar position="fixed" className={classes.appBar} styles={{top: '60'}}>
+        <AppBar position="fixed" className={classes.appBar}>
             <Toolbar>
                 <IconButton edge="start" className={classes.backButton}  aria-label="menu" component={Link} to="/">
                     <ArrowBack style={{color: '#FFF', fontSize: 30}}/>
                 </IconButton>
                 <Typography variant="h5" className={classes.title}>
-                    <span style={{ fontWeight: 800 }}>SHOP</span>
-                    <span style={{ fontWeight: 300, marginLeft: 3 }}>BOARD</span>
+                    <span className={classes.shop}>SHOP</span>
+                    <span className={classes.back}>BOARD</span>
                 </Typography>
                 <IconButton edge="start" className={classes.menuButton} color="inherit" aria-label="menu">
                     <MenuIcon />
