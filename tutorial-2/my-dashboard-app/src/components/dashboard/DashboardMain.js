@@ -5,12 +5,12 @@ import { DateFilter, DateFilterHelpers, defaultDateFilterOptions } from "@goodda
 import { Headline } from "@gooddata/sdk-ui-charts";
 import { InsightView } from "@gooddata/sdk-ui-ext";
 import * as Ldm from "../../ldm/full";
-import styles from './DashboardMain.module.scss';
+import styles from "./DashboardMain.module.scss";
 import "@gooddata/sdk-ui-filters/styles/css/main.css";
 
 const DashboardMain = () => {
-  // This is used to identifiy the data set we will use for all date filtering - better explanatoin ??
-    const DATASET = Ldm.DateDatasets;
+    // This is used to identifiy the data set we will use for all date filtering - better explanatoin ??
+    const DATASET = Ldm.DateDatasets.Date;
 
     // We enumerate all of the measures we want to display in our headline components, as well as their corresponding previous
     // period measures.
@@ -26,10 +26,10 @@ const DashboardMain = () => {
 
     const returnRevenue = Ldm.RevenueReturns;
     const returnRevenuePrevious = newPreviousPeriodMeasure(
-    returnRevenue,
-    [{ dataSet: DATASET, periodsAgo: 1 }],
-    (m) => m.alias('Previous Period'),
-  );
+        returnRevenue,
+        [{ dataSet: DATASET, periodsAgo: 1 }],
+        (m) => m.alias("Previous Period"),
+    );
 
     const returns = Ldm.NrOrdersReturns;
     const returnsPrevious = newPreviousPeriodMeasure(returns, [{ dataSet: DATASET, periodsAgo: 1 }], (m) =>
