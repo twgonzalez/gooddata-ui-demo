@@ -1,5 +1,5 @@
 import React from "react";
-import { Link } from 'react-router-dom';
+import { Link } from "react-router-dom";
 import { makeStyles } from "@material-ui/core/styles";
 import AppBar from "@material-ui/core/AppBar";
 import Toolbar from "@material-ui/core/Toolbar";
@@ -16,7 +16,7 @@ const useStyles = makeStyles(theme => ({
         marginLeft: theme.spacing(2),
     },
     backButton: {
-      marginRight: theme.spacing(1),
+        marginRight: theme.spacing(1),
     },
     title: {
         flexGrow: 1,
@@ -27,10 +27,6 @@ const useStyles = makeStyles(theme => ({
     shop: {
         fontWeight: 800,
     },
-    back: {
-        fontWeight: 300,
-        marginLeft: 3,
-    }
 }));
 
 const DashboardHeader = () => {
@@ -38,8 +34,14 @@ const DashboardHeader = () => {
     return (
         <AppBar position="fixed" className={classes.appBar}>
             <Toolbar>
-                <IconButton edge="start" className={classes.backButton}  aria-label="menu" component={Link} to="/">
-                    <ArrowBack style={{color: '#FFF', fontSize: 30}}/>
+                <IconButton
+                    edge="start"
+                    className={classes.backButton}
+                    aria-label="menu"
+                    component={Link}
+                    to="/"
+                >
+                    <ArrowBack style={{ color: "#FFF", fontSize: 30 }} />
                 </IconButton>
                 <Typography variant="h5" className={classes.title}>
                     <span className={classes.shop}>SHOP</span>
