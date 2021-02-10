@@ -3,7 +3,7 @@ const proxy = require("http-proxy-middleware");
 const constants = require("./constants");
 
 const domain = constants.backend;
-module.exports = function(app) {
+module.exports = function (app) {
     app.use(
         proxy("/gdc", {
             changeOrigin: true,
@@ -14,9 +14,9 @@ module.exports = function(app) {
                 host: domain.replace(/https:\/\//, ''),
                 origin: null,
             },
-            onProxyReq: function(proxyReq, req, res) {
-                proxyReq.setHeader("accept-encoding", "identity");
-            },
+            onProxyReq(proxyReq, req, res) {
+        proxyReq.setHeader('accept-encoding', 'identity');
+      },
         }),
     );
     app.use(

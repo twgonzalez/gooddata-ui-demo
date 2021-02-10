@@ -13,7 +13,7 @@ import Button from "../controls/Button";
 import styles from "./LoginForm.module.scss";
 import sharedStyles from "../../shared.module.scss";
 
-const LoginFormComponent = props => {
+const LoginFormComponent = (props) => {
     const {
         values,
         touched,
@@ -107,24 +107,21 @@ const formikConnector = withFormik({
         password,
     }),
     validationSchema: object().shape({
-        email: string()
-            .email("Invalid e-mail address")
-            .required("E-mail is required"),
+        email: string().email("Invalid e-mail address").required("E-mail is required"),
         password: string().required("Password is required"),
     }),
-    handleSubmit: ({ email, password }, { props: { login, history }, setFieldError, setSubmitting }) => {
-        return login(email, password).then(
-            () => history.push("/"),
-            error => {
+    handleSubmit: ({ email, password }, { props: { login, history }, setFieldError, setSubmitting }) =>
+        login(email, password).then(
+    () => history.push('/'),
+    error => {
                 setSubmitting(false);
-                if (error.response && error.response.status === 401) {
-                    setFieldError("password", "E-mail or password is invalid");
-                } else {
-                    setFieldError("password", "Unknown error");
-                }
+      if (error.response && error.response.status === 401) {
+        setFieldError('password', 'E-mail or password is invalid');
+      } else {
+        setFieldError('password', 'Unknown error');
+      }
             },
-        );
-    },
+  ),
 });
 
 export default withRouter(formikConnector(LoginFormComponent));

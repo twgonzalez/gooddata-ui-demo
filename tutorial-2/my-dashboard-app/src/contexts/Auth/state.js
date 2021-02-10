@@ -17,32 +17,32 @@ export const useAuthState = (initialState) => {
     const [{ authStatus, authError }, setState] = useState(initialState);
     const onLoginStart = () =>
         setState({
-            authStatus: AuthStatus.LOGGING_IN,
+    authStatus: AuthStatus.LOGGING_IN,
         });
     const onLoginSuccess = () =>
         setState({
-            authStatus: AuthStatus.AUTHORIZED,
-        });
+    authStatus: AuthStatus.AUTHORIZED,
+  });
     const onLoginError = (err) =>
         setState({
-            authStatus: AuthStatus.UNAUTHORIZED,
-            authError: err.message,
-        });
+    authStatus: AuthStatus.UNAUTHORIZED,
+    authError: err.message,
+  });
 
     const onLogoutStart = () =>
         setState({
             authStatus: AuthStatus.LOGGING_OUT,
-        });
+  });
     const onLogoutSuccess = () =>
         setState({
             authStatus: AuthStatus.UNAUTHORIZED,
-            authError: undefined,
-        });
+    authError: undefined,
+  });
     const onLogoutError = (err) =>
         setState({
-            authStatus: AuthStatus.UNAUTHORIZED,
+    authStatus: AuthStatus.UNAUTHORIZED,
             authError: err.message,
-        });
+  });
 
     return {
         onLoginStart,

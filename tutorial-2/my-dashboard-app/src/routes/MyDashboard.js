@@ -4,7 +4,7 @@ import CssBaseline from "@material-ui/core/CssBaseline";
 import DashboardHeader from "../components/dashboard/DashboardHeader";
 import DashboardMain from "../components/dashboard/DashboardMain";
 
-const useStyles = makeStyles(theme => ({
+const useStyles = makeStyles((theme) => ({
     root: {
         display: "flex",
     },
@@ -21,13 +21,13 @@ const useStyles = makeStyles(theme => ({
 const MyDashboard = () => {
     const classes = useStyles();
     return (
-            <div className={classes.root}>
-                <CssBaseline />
-                <DashboardHeader />
-                <main className={classes.content}>
-                    <DashboardMain/>
-                </main>
-            </div>
+        <div className={classes.root}>
+            <CssBaseline />
+            <DashboardHeader />
+            <main className={classes.content}>
+                <DashboardMain />
+            </main>
+        </div>
     );
 };
 

@@ -3,9 +3,9 @@ import last from "lodash/last";
 import isEmpty from "lodash/isEmpty";
 
 import { defaultSourceState } from "../utils";
-import { useBackend } from "../contexts/Auth";
-import { useAuth } from "../contexts/Auth";
-import { AuthStatus } from "../contexts/Auth/state";
+import { useBackend, useAuth } from "./Auth";
+
+import { AuthStatus } from './Auth/state';
 import { workspaceFilter } from "../constants";
 
 const WorkspaceListContext = createContext({
@@ -13,13 +13,10 @@ const WorkspaceListContext = createContext({
     firstWorkspace: null,
 });
 
-const filterWorkspaces = (workspaces, filter) => {
-    return !filter ? workspaces : workspaces.filter(workspace => workspace.meta.title.match(filter));
-};
+const filterWorkspaces = (workspaces, filter) =>
+    !filter ? workspaces : workspaces.filter((workspace) => workspace.meta.title.match(filter));
 
-const getFirstWorkspace = workspaces => {
-    return workspaces.length && last(workspaces[0].id.split("/"));
-};
+const getFirstWorkspace = (workspaces) => workspaces.length && last(workspaces[0].id.split('/'));
 
 export const WorkspaceListProvider = ({ children }) => {
     const { authStatus } = useAuth();
@@ -33,13 +30,12 @@ export const WorkspaceListProvider = ({ children }) => {
 
             try {
                 const workspaces = [];
-                let page = await backend
-                    .workspaces()
-                    .forCurrentUser()
-                    .query();
+                let page = await backend.workspaces().forCurrentUser().query();
 
                 while (!isEmpty(page.items)) {
-                    const allDescriptors = await Promise.all(page.items.map(workspace => workspace.getDescriptor()));
+                    const allDescriptors = await Promise.all(
+            page.items.map((workspace) => workspace.getDescriptor()),
+          );
 
                     workspaces.push(...allDescriptors);
                     page = await page.next();

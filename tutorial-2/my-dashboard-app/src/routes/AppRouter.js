@@ -18,22 +18,20 @@ const RedirectIfNotLoggedIn = () => {
     return shouldRedirectToLogin ? <Route component={() => <Redirect to="/login" />} /> : null;
 };
 
-const AppRouter = () => {
-    return (
-        <div className={styles.AppRouter}>
-            <Router>
-                {/* WorkspaceProvider depends on Router so it must be nested */}
-                <WorkspaceProvider>
-                    <Route exact path="/" component={Welcome} />
-                    <Route exact path="/home" component={Home} />
-                    <Route exact path="/my-dashboard" component={MyDashboard} />
-                    <Route exact path="/login" component={Login} />
-                    <Route exact path="/logout" component={Logout} />
-                    <RedirectIfNotLoggedIn />
-                </WorkspaceProvider>
-            </Router>
-        </div>
-    );
-};
+const AppRouter = () => (
+    <div className={styles.AppRouter}>
+        <Router>
+            {/* WorkspaceProvider depends on Router so it must be nested */}
+            <WorkspaceProvider>
+                <Route exact path="/" component={Welcome} />
+                <Route exact path="/home" component={Home} />
+                <Route exact path="/my-dashboard" component={MyDashboard} />
+                <Route exact path="/login" component={Login} />
+                <Route exact path="/logout" component={Logout} />
+                <RedirectIfNotLoggedIn />
+            </WorkspaceProvider>
+        </Router>
+    </div>
+);
 
 export default AppRouter;

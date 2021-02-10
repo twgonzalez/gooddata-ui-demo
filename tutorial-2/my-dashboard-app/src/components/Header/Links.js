@@ -3,21 +3,15 @@ import cx from "classnames";
 import { NavLink } from "react-router-dom";
 import styles from "./Header.module.scss";
 
-const Links = () => {
-    return (
-        <>
-            <NavLink
-                to="/home"
-                className={cx(styles.Link, "s-welcome-link")}
-                activeClassName={styles.LinkActive}
-            >
-                Home
-            </NavLink>
-            <NavLink to={"/my-dashboard"} className={styles.Link} activeClassName={styles.LinkActive} exact>
-               My Dashboard
-            </NavLink>
-        </>
-    );
-};
+const Links = () => (
+    <>
+        <NavLink to="/home" className={cx(styles.Link, "s-welcome-link")} activeClassName={styles.LinkActive}>
+            Home
+        </NavLink>
+        <NavLink to="/my-dashboard" className={styles.Link} activeClassName={styles.LinkActive} exact>
+            My Dashboard
+        </NavLink>
+    </>
+);
 
 export default Links;

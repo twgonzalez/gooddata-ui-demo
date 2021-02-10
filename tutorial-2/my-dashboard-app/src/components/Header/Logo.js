@@ -5,12 +5,10 @@ import constants from "../../constants";
 
 import styles from "./Header.module.scss";
 
-const Logo = () => {
-    return (
-        <NavLink to="/" className={cx(styles.Link, styles.Logo)}>
-            {constants.appName}
-        </NavLink>
-    );
-};
+const Logo = () => (
+    <NavLink to="/" className={cx(styles.Link, styles.Logo)}>
+        {constants.appName}
+    </NavLink>
+);
 
 export default Logo;

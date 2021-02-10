@@ -2,7 +2,7 @@ import React, { createContext, useState, useContext, useEffect } from "react";
 import { useQueryState } from "react-router-use-location-state";
 import { WorkspaceProvider as DefaultWorkspaceProvider } from "@gooddata/sdk-ui";
 import { workspace as constWorkspace } from "../constants";
-import { useWorkspaceList } from "../contexts/WorkspaceList";
+import { useWorkspaceList } from './WorkspaceList';
 
 const WorkspaceContext = createContext({
     workspace: constWorkspace,

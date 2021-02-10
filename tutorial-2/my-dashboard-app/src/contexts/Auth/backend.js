@@ -10,10 +10,8 @@ if (process.env.REACT_APP_SET_HOSTNAME) {
     backendConfig.hostname = backend;
 }
 
-export const createBackend = () => {
-    return bearFactory(backendConfig).withAuthentication(new ContextDeferredAuthProvider());
-};
+export const createBackend = () =>
+    bearFactory(backendConfig).withAuthentication(new ContextDeferredAuthProvider());
 
-export const backendWithCredentials = (backend, username, password) => {
-    return backend.withAuthentication(new FixedLoginAndPasswordAuthProvider(username, password));
-};
+export const backendWithCredentials = (backend, username, password) =>
+    backend.withAuthentication(new FixedLoginAndPasswordAuthProvider(username, password));
