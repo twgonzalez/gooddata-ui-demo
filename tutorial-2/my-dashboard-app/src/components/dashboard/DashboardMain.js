@@ -1,12 +1,12 @@
-import React, { useState } from "react";
+import React, { useState } from 'react';
 
-import { newPreviousPeriodMeasure } from "@gooddata/sdk-model";
-import { DateFilter, DateFilterHelpers, defaultDateFilterOptions } from "@gooddata/sdk-ui-filters";
-import { Headline } from "@gooddata/sdk-ui-charts";
-import { InsightView } from "@gooddata/sdk-ui-ext";
-import * as Ldm from "../../ldm/full";
-import styles from "./DashboardMain.module.scss";
-import "@gooddata/sdk-ui-filters/styles/css/main.css";
+import { newPreviousPeriodMeasure } from '@gooddata/sdk-model';
+import { DateFilter, DateFilterHelpers, defaultDateFilterOptions } from '@gooddata/sdk-ui-filters';
+import { Headline } from '@gooddata/sdk-ui-charts';
+import { InsightView } from '@gooddata/sdk-ui-ext';
+import * as Ldm from '../../ldm/full';
+import styles from './DashboardMain.module.scss';
+import '@gooddata/sdk-ui-filters/styles/css/main.css';
 
 const DashboardMain = () => {
     // This is used to identifiy the data set we will use for all date filtering - better explanatoin ??
@@ -16,24 +16,24 @@ const DashboardMain = () => {
     // period measures.
     const revenue = Ldm.Revenue;
     const revenuePrevious = newPreviousPeriodMeasure(revenue, [{ dataSet: DATASET, periodsAgo: 1 }], (m) =>
-        m.alias("Previous Period"),
+        m.alias('Previous Period'),
     );
 
     const orders = Ldm.NrOrdersValid;
     const ordersPrevious = newPreviousPeriodMeasure(orders, [{ dataSet: DATASET, periodsAgo: 1 }], (m) =>
-        m.alias("Previous Period"),
+        m.alias('Previous Period'),
     );
 
     const returnRevenue = Ldm.RevenueReturns;
     const returnRevenuePrevious = newPreviousPeriodMeasure(
         returnRevenue,
         [{ dataSet: DATASET, periodsAgo: 1 }],
-        (m) => m.alias("Previous Period"),
+        (m) => m.alias('Previous Period'),
     );
 
     const returns = Ldm.NrOrdersReturns;
     const returnsPrevious = newPreviousPeriodMeasure(returns, [{ dataSet: DATASET, periodsAgo: 1 }], (m) =>
-        m.alias("Previous Period"),
+        m.alias('Previous Period'),
     );
 
     // We use this to set up our

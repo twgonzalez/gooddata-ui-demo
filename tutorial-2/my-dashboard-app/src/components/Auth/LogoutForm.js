@@ -1,11 +1,11 @@
-import React, { useEffect } from "react";
-import { withRouter } from "react-router-dom";
-import CustomLoading from "../CustomLoading";
+import React, { useEffect } from 'react';
+import { withRouter } from 'react-router-dom';
+import CustomLoading from '../CustomLoading';
 
 const LogoutForm = ({ history, logout }) => {
     useEffect(
         () => {
-            logout().then(() => history.push("/login"));
+            logout().then(() => history.push('/login'));
         },
         // only call the logout on initial mount -> the empty array is correct here
         [], // eslint-disable-line react-hooks/exhaustive-deps

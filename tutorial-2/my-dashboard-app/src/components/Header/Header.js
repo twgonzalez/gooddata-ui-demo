@@ -1,12 +1,12 @@
-import React, { useState, useEffect, useCallback } from "react";
-import throttle from "lodash/throttle";
-import Logo from "./Logo";
+import React, { useState, useEffect, useCallback } from 'react';
+import throttle from 'lodash/throttle';
+import Logo from './Logo';
 
-import styles from "./Header.module.scss";
-import Links from "./Links";
-import Aside from "./Aside";
-import { useAuth } from "../../contexts/Auth";
-import { AuthStatus } from "../../contexts/Auth/state";
+import styles from './Header.module.scss';
+import Links from './Links';
+import Aside from './Aside';
+import { useAuth } from '../../contexts/Auth';
+import { AuthStatus } from '../../contexts/Auth/state';
 // uncomment the next line to use WorkspacePicker
 // import WorkspacePicker from "../controls/WorkspacePicker";
 
@@ -59,9 +59,9 @@ const Header = () => {
     );
 
     useEffect(() => {
-        window.addEventListener("resize", handleResize);
+        window.addEventListener('resize', handleResize);
         return () => {
-            window.removeEventListener("resize", handleResize);
+            window.removeEventListener('resize', handleResize);
         };
     }, [handleResize]);
 

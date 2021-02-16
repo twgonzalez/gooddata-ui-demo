@@ -1,12 +1,12 @@
 // (C) 2019 GoodData Corporation
-import { useState } from "react";
+import { useState } from 'react';
 
 export const AuthStatus = {
-    AUTHORIZING: "AUTHORIZING",
-    AUTHORIZED: "AUTHORIZED",
-    UNAUTHORIZED: "UNAUTHORIZED",
-    LOGGING_IN: "LOGGING_IN",
-    LOGGING_OUT: "LOGGING_OUT",
+    AUTHORIZING: 'AUTHORIZING',
+    AUTHORIZED: 'AUTHORIZED',
+    UNAUTHORIZED: 'UNAUTHORIZED',
+    LOGGING_IN: 'LOGGING_IN',
+    LOGGING_OUT: 'LOGGING_OUT',
 };
 
 export const initialState = {

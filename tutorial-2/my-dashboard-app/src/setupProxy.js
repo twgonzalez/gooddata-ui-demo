@@ -1,13 +1,13 @@
-const proxy = require("http-proxy-middleware");
+const proxy = require('http-proxy-middleware');
 
-const constants = require("./constants");
+const constants = require('./constants');
 
 const domain = constants.backend;
 module.exports = function (app) {
     app.use(
-        proxy("/gdc", {
+        proxy('/gdc', {
             changeOrigin: true,
-            cookieDomainRewrite: "localhost",
+            cookieDomainRewrite: 'localhost',
             secure: false,
             target: domain,
             headers: {
@@ -15,19 +15,19 @@ module.exports = function (app) {
                 origin: null,
             },
             onProxyReq(proxyReq, req, res) {
-        proxyReq.setHeader('accept-encoding', 'identity');
-      },
+                proxyReq.setHeader('accept-encoding', 'identity');
+            },
         }),
     );
     app.use(
-        proxy("/*.html", {
+        proxy('/*.html', {
             changeOrigin: true,
             secure: false,
             target: domain,
         }),
     );
     app.use(
-        proxy("/packages/*.{js,css}", {
+        proxy('/packages/*.{js,css}', {
             changeOrigin: true,
             secure: false,
             target: domain,

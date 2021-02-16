@@ -1,23 +1,23 @@
-import React from "react";
-import cx from "classnames";
+import React from 'react';
+import cx from 'classnames';
 
-import styles from "./CustomLoading.module.scss";
+import styles from './CustomLoading.module.scss';
 
 const baseAnimationDuration = 1.8;
 
 export const CustomLoading = ({
     label = null,
     inline = false,
-    height = "100%",
+    height = '100%',
     width = undefined,
-    imageHeight = "38px",
+    imageHeight = '38px',
     imageWidth = undefined,
-    color = "#14b2e2",
+    color = '#14b2e2',
     speed = 1,
     className = null,
 }) => {
     const barStyle = {
-        transformOrigin: "0 100%",
+        transformOrigin: '0 100%',
         animation: `GDC-pump ${baseAnimationDuration / speed}s infinite`,
         fill: color,
     };
@@ -36,7 +36,7 @@ export const CustomLoading = ({
 
     return (
         <div
-            className={cx(styles.CustomLoading, "s-loading", inline && styles.Inline, className)}
+            className={cx(styles.CustomLoading, 's-loading', inline && styles.Inline, className)}
             style={{
                 width,
                 height,

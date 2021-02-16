@@ -41,7 +41,8 @@
         "testcafe": "cross-env TEST_BACKEND=http://localhost:5000 ./scripts/run-testcafe.js",
         "testcafe-visual": "cross-env TEST_MODE=visual ./scripts/run-testcafe.js",
         "refresh-ldm": "node ./scripts/refresh-ldm.js",
-        "lint": "eslint 'src/**/*.{js,jsx}' --fix"
+        "lint-dashboard": "eslint 'src/components/dashboard/*.{js,jsx}' 'src/routes/MyDashboard.js'",
+        "format": "prettier --write 'src/components/dashboard/*.{js,jsx}' 'src/routes/MyDashboard.js'"
     },
     "eslintConfig": {
         "extends": "react-app"

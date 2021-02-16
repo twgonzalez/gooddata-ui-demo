@@ -1,12 +1,12 @@
-import React from "react";
-import { makeStyles } from "@material-ui/core/styles";
-import CssBaseline from "@material-ui/core/CssBaseline";
-import DashboardHeader from "../components/dashboard/DashboardHeader";
-import DashboardMain from "../components/dashboard/DashboardMain";
+import React from 'react';
+import { makeStyles } from '@material-ui/core/styles';
+import CssBaseline from '@material-ui/core/CssBaseline';
+import DashboardHeader from '../components/dashboard/DashboardHeader';
+import DashboardMain from '../components/dashboard/DashboardMain';
 
 const useStyles = makeStyles((theme) => ({
     root: {
-        display: "flex",
+        display: 'flex',
     },
     content: {
         flexGrow: 1,

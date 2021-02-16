@@ -1,8 +1,8 @@
 import bearFactory, {
     FixedLoginAndPasswordAuthProvider,
     ContextDeferredAuthProvider,
-} from "@gooddata/sdk-backend-bear";
-import { backend } from "../../constants";
+} from '@gooddata/sdk-backend-bear';
+import { backend } from '../../constants';
 
 const backendConfig = {};
 

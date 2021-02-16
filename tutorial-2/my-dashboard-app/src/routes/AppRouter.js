@@ -1,16 +1,16 @@
-import React from "react";
-import { BrowserRouter as Router, Route, Redirect } from "react-router-dom";
+import React from 'react';
+import { BrowserRouter as Router, Route, Redirect } from 'react-router-dom';
 
-import { WorkspaceProvider } from "../contexts/Workspace";
-import Login from "./Login";
-import Logout from "./Logout";
-import Welcome from "./Welcome";
-import Home from "./Home";
-import MyDashboard from "./MyDashboard";
+import { WorkspaceProvider } from '../contexts/Workspace';
+import Login from './Login';
+import Logout from './Logout';
+import Welcome from './Welcome';
+import Home from './Home';
+import MyDashboard from './MyDashboard';
 
-import styles from "./AppRouter.module.scss";
-import { useAuth } from "../contexts/Auth";
-import { AuthStatus } from "../contexts/Auth/state";
+import styles from './AppRouter.module.scss';
+import { useAuth } from '../contexts/Auth';
+import { AuthStatus } from '../contexts/Auth/state';
 
 const RedirectIfNotLoggedIn = () => {
     const auth = useAuth();

@@ -1,7 +1,7 @@
-import React, { createContext, useState, useContext, useEffect } from "react";
-import { useQueryState } from "react-router-use-location-state";
-import { WorkspaceProvider as DefaultWorkspaceProvider } from "@gooddata/sdk-ui";
-import { workspace as constWorkspace } from "../constants";
+import React, { createContext, useState, useContext, useEffect } from 'react';
+import { useQueryState } from 'react-router-use-location-state';
+import { WorkspaceProvider as DefaultWorkspaceProvider } from '@gooddata/sdk-ui';
+import { workspace as constWorkspace } from '../constants';
 import { useWorkspaceList } from './WorkspaceList';
 
 const WorkspaceContext = createContext({
@@ -11,7 +11,7 @@ const WorkspaceContext = createContext({
 
 export const WorkspaceProvider = ({ children }) => {
     const workspaceList = useWorkspaceList();
-    const [queryWorkspace, setQueryWorkspace] = useQueryState("workspace", constWorkspace);
+    const [queryWorkspace, setQueryWorkspace] = useQueryState('workspace', constWorkspace);
     const [workspace, setWorkspace] = useState(queryWorkspace);
 
     // update query string with actual workspace

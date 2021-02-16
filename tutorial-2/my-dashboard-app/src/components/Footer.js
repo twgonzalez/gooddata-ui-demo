@@ -1,11 +1,11 @@
-import React from "react";
+import React from 'react';
 
-import styles from "./Footer.module.scss";
+import styles from './Footer.module.scss';
 
-import githubUri from "../media/github-logo.png";
-import stackOverflowUri from "../media/stack-overflow-logo.png";
-import twitterUri from "../media/twitter-logo.png";
-import npmUri from "../media/npm-logo.png";
+import githubUri from '../media/github-logo.png';
+import stackOverflowUri from '../media/stack-overflow-logo.png';
+import twitterUri from '../media/twitter-logo.png';
+import npmUri from '../media/npm-logo.png';
 
 const SocialItem = ({ link, title, imageUri }) => (
     <a href={link} target="_blank" rel="noopener noreferrer" className={styles.FooterLink}>

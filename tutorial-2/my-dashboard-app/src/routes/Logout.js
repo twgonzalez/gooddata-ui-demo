@@ -1,10 +1,10 @@
-import React from "react";
+import React from 'react';
 
-import Page from "../components/Page";
-import LogoutForm from "../components/Auth/LogoutForm";
+import Page from '../components/Page';
+import LogoutForm from '../components/Auth/LogoutForm';
 
-import pageStyles from "../components/Page.module.scss";
-import { useAuth } from "../contexts/Auth";
+import pageStyles from '../components/Page.module.scss';
+import { useAuth } from '../contexts/Auth';
 
 function Logout() {
     const { logout } = useAuth();

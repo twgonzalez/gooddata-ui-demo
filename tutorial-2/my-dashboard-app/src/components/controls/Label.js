@@ -1,9 +1,9 @@
-import React from "react";
-import cx from "classnames";
+import React from 'react';
+import cx from 'classnames';
 
-import styles from "./Label.module.scss";
+import styles from './Label.module.scss';
 
-const Label = ({ className = null, type = "text", children, hasError = false, ...restProps }) => (
+const Label = ({ className = null, type = 'text', children, hasError = false, ...restProps }) => (
     <label className={cx(styles.Label, hasError && styles.Error, className)} {...restProps}>
         {children}
     </label>

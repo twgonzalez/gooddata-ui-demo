@@ -1,12 +1,12 @@
-import React from "react";
-import Helmet from "react-helmet";
-import cx from "classnames";
-import Header from "./Header/Header";
-import Footer from "./Footer";
+import React from 'react';
+import Helmet from 'react-helmet';
+import cx from 'classnames';
+import Header from './Header/Header';
+import Footer from './Footer';
 
-import styles from "./Page.module.scss";
+import styles from './Page.module.scss';
 
-const Page = ({ children, className = null, mainClassName = null, title = "GoodData App" }) => (
+const Page = ({ children, className = null, mainClassName = null, title = 'GoodData App' }) => (
     <div className={cx(styles.Page, className)}>
         <Helmet>
             <title>{title}</title>

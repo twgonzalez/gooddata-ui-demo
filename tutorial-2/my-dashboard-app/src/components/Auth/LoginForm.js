@@ -1,17 +1,17 @@
-import React from "react";
-import cx from "classnames";
-import { withRouter } from "react-router-dom";
-import { withFormik } from "formik";
-import { string, object } from "yup";
+import React from 'react';
+import cx from 'classnames';
+import { withRouter } from 'react-router-dom';
+import { withFormik } from 'formik';
+import { string, object } from 'yup';
 
-import C from "../../constants";
-import CustomLoading from "../CustomLoading";
-import Input from "../controls/Input";
-import Label from "../controls/Label";
-import Button from "../controls/Button";
+import C from '../../constants';
+import CustomLoading from '../CustomLoading';
+import Input from '../controls/Input';
+import Label from '../controls/Label';
+import Button from '../controls/Button';
 
-import styles from "./LoginForm.module.scss";
-import sharedStyles from "../../shared.module.scss";
+import styles from './LoginForm.module.scss';
+import sharedStyles from '../../shared.module.scss';
 
 const LoginFormComponent = (props) => {
     const {
@@ -28,7 +28,7 @@ const LoginFormComponent = (props) => {
     return (
         <>
             {loginError && <div className={styles.Error}>{loginError}</div>}
-            <form onSubmit={handleSubmit} className={cx(styles.Login, "s-login-form")}>
+            <form onSubmit={handleSubmit} className={cx(styles.Login, 's-login-form')}>
                 <div className={styles.LoginLogo}>
                     <img
                         src="https://secure.gooddata.com/images/logo-new.png"
@@ -38,10 +38,10 @@ const LoginFormComponent = (props) => {
                     />
                 </div>
                 <h2>
-                    Please sign in to the{" "}
+                    Please sign in to the{' '}
                     <a className={cx(sharedStyles.Link, sharedStyles.BreakWord)} href={C.backend}>
-                        {C.backend.replace(/https?:\/\//, "")}
-                    </a>{" "}
+                        {C.backend.replace(/https?:\/\//, '')}
+                    </a>{' '}
                     domain
                 </h2>
                 <div className={styles.InputBlock}>
@@ -49,7 +49,7 @@ const LoginFormComponent = (props) => {
                         E-mail
                     </Label>
                     <Input
-                        className={cx(styles.Input, "s-login-input-email")}
+                        className={cx(styles.Input, 's-login-input-email')}
                         hasError={errors.email && touched.email}
                         type="email"
                         id="email"
@@ -70,7 +70,7 @@ const LoginFormComponent = (props) => {
                         Password
                     </Label>
                     <Input
-                        className={cx(styles.Input, "s-login-input-password")}
+                        className={cx(styles.Input, 's-login-input-password')}
                         hasError={errors.password && touched.password}
                         type="password"
                         name="password"
@@ -92,7 +92,7 @@ const LoginFormComponent = (props) => {
                                 &emsp;Signing in...
                             </>
                         ) : (
-                            "Sign in"
+                            'Sign in'
                         )}
                     </Button>
                 </div>
@@ -102,26 +102,26 @@ const LoginFormComponent = (props) => {
 };
 
 const formikConnector = withFormik({
-    mapPropsToValues: ({ email = "", password = "" }) => ({
+    mapPropsToValues: ({ email = '', password = '' }) => ({
         email,
         password,
     }),
     validationSchema: object().shape({
-        email: string().email("Invalid e-mail address").required("E-mail is required"),
-        password: string().required("Password is required"),
+        email: string().email('Invalid e-mail address').required('E-mail is required'),
+        password: string().required('Password is required'),
     }),
     handleSubmit: ({ email, password }, { props: { login, history }, setFieldError, setSubmitting }) =>
         login(email, password).then(
-    () => history.push('/'),
-    error => {
+            () => history.push('/'),
+            (error) => {
                 setSubmitting(false);
-      if (error.response && error.response.status === 401) {
-        setFieldError('password', 'E-mail or password is invalid');
-      } else {
-        setFieldError('password', 'Unknown error');
-      }
+                if (error.response && error.response.status === 401) {
+                    setFieldError('password', 'E-mail or password is invalid');
+                } else {
+                    setFieldError('password', 'Unknown error');
+                }
             },
-  ),
+        ),
 });
 
 export default withRouter(formikConnector(LoginFormComponent));

@@ -1,17 +1,17 @@
-import React from "react";
-import { Link } from "react-router-dom";
+import React from 'react';
+import { Link } from 'react-router-dom';
 
-import Page from "../components/Page";
+import Page from '../components/Page';
 
-import styles from "./Welcome.module.scss";
+import styles from './Welcome.module.scss';
 
-import kpiUri from "../media/kpi.png";
-import iUri from "../media/i.svg";
-import successUri from "../media/success.svg";
+import kpiUri from '../media/kpi.png';
+import iUri from '../media/i.svg';
+import successUri from '../media/success.svg';
 
 const linkProps = {
-    target: "_blank",
-    rel: "noopenner noreferrer",
+    target: '_blank',
+    rel: 'noopenner noreferrer',
 };
 
 const Code = ({ children, ...restProps }) => (
@@ -102,7 +102,7 @@ const Welcome = () => (
             <li>
                 In <Code>Home.js</Code>, replace <Code>Place your content here</Code> with actual code.
                 <p>
-                    For example, <Code> {"<InsightView insight={Ldm.Insights.Headline}/>"}</Code>. We access
+                    For example, <Code> {'<InsightView insight={Ldm.Insights.Headline}/>'}</Code>. We access
                     the <Code>Headline</Code> identifier through the generated <Code>LDM</Code>
                     objects.
                     <br />
@@ -156,7 +156,7 @@ const Welcome = () => (
 
         <h3>Add a link to the navigation / menu</h3>
         <p>
-            Add a new <Code>{"<NavLink>"}</Code> component to <Code>/src/components/Header/Links.js</Code>.
+            Add a new <Code>{'<NavLink>'}</Code> component to <Code>/src/components/Header/Links.js</Code>.
         </p>
 
         <h3>Add the multi-tenant functionality and the optional workspace picker</h3>
@@ -169,9 +169,9 @@ const Welcome = () => (
                 <Code>/src/constants.js</Code> is used as the default value.
             </li>
             <li>
-                The <Code>WorkspaceList</Code> context object in <Code>/src/contexts/WorkspaceList.js</Code>{" "}
+                The <Code>WorkspaceList</Code> context object in <Code>/src/contexts/WorkspaceList.js</Code>{' '}
                 provides a list of all workspaces available for a logged-in user. To allow users to select a
-                workspace within the app, use the WorkspacePicker component in{" "}
+                workspace within the app, use the WorkspacePicker component in{' '}
                 <Code>/src/components/controls/WorkspacePicker.js</Code>.
             </li>
             <li>

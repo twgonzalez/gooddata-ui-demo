@@ -1,8 +1,8 @@
 // (C) 2019 GoodData Corporation
-import React, { createContext, useContext, useEffect, useState } from "react";
-import { backendWithCredentials, createBackend } from "./backend";
+import React, { createContext, useContext, useEffect, useState } from 'react';
+import { backendWithCredentials, createBackend } from './backend';
 
-import { useAuthState, initialState } from "./state";
+import { useAuthState, initialState } from './state';
 
 const noop = () => undefined;
 

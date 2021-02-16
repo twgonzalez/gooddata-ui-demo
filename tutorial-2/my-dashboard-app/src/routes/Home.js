@@ -1,6 +1,6 @@
-import React from "react";
+import React from 'react';
 
-import Page from "../components/Page";
+import Page from '../components/Page';
 
 const Home = () => <Page>Place your content here&hellip;</Page>;
 
