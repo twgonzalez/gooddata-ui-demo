@@ -3,7 +3,7 @@ import { emphasize, withStyles } from "@material-ui/core/styles";
 import Breadcrumbs from "@material-ui/core/Breadcrumbs";
 import Chip from "@material-ui/core/Chip";
 
-const StyledBreadcrumb = withStyles(theme => ({
+const StyledBreadcrumb = withStyles((theme) => ({
     root: {
         backgroundColor: theme.palette.grey[200],
         height: 32,
@@ -29,26 +29,11 @@ const DashboardBreadcrumbs = ({ breadCrumbItems, onClick = () => {}, onDelete = 
         <Breadcrumbs separator="/" aria-label="breadcrumb">
             {breadCrumbItems.map((item, index) => (
                 <StyledBreadcrumb
-                    component="a"
                     key={item.label + index}
                     label={item.label}
                     icon={item.icon}
-                    onClick={() => {
-                        if (item.dimension) {
-                            onClick(item, index);
-                            //setBreadCrumbItems([item]);
-                            // setFilter({ attributeFilter: null, dimension: item.dimension });
-                        }
-                    }}
-                    onDelete={
-                        index > 0
-                            ? () => {
-                                  onDelete(item, index);
-                                  // setBreadCrumbItems([breadCrumbItems[0]]);
-                                  // setFilter({ attributeFilter: null, dimension: breadCrumbItems[0].dimension })
-                              }
-                            : null
-                    }
+                    onClick={index < breadCrumbItems.length ? () => onClick(item, index) : null}
+                    onDelete={index > 0 ? () => onDelete(item, index) : null}
                 />
             ))}
         </Breadcrumbs>

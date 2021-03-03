@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from "react";
-import "./DashboardMain.css";
 import styles from "./DashboardMain.module.scss";
 import cx from "classnames";
 import * as Ldm from "../../ldm/full";
@@ -35,12 +34,12 @@ const DashboardMain = ({ dimensionItem }) => {
     // We enumerate all of the measures we want to display in our headline components, as well as their corresponding previous
     // period measures.
     const revenue = Ldm.Revenue;
-    const revenuePrevious = newPreviousPeriodMeasure(revenue, [{ dataSet: DATASET, periodsAgo: 1 }], m =>
+    const revenuePrevious = newPreviousPeriodMeasure(revenue, [{ dataSet: DATASET, periodsAgo: 1 }], (m) =>
         m.alias("Previous Period"),
     );
 
-    const orders = Ldm.NrOrdersValid;
-    const ordersPrevious = newPreviousPeriodMeasure(orders, [{ dataSet: DATASET, periodsAgo: 1 }], m =>
+    const orders = Ldm.NrOfValidOrders;
+    const ordersPrevious = newPreviousPeriodMeasure(orders, [{ dataSet: DATASET, periodsAgo: 1 }], (m) =>
         m.alias("Previous Period"),
     );
 
@@ -48,11 +47,11 @@ const DashboardMain = ({ dimensionItem }) => {
     const returnRevenuePrevious = newPreviousPeriodMeasure(
         returnRevenue,
         [{ dataSet: DATASET, periodsAgo: 1 }],
-        m => m.alias("Previous Period"),
+        (m) => m.alias("Previous Period"),
     );
 
     const returns = Ldm.NrOrdersReturns;
-    const returnsPrevious = newPreviousPeriodMeasure(returns, [{ dataSet: DATASET, periodsAgo: 1 }], m =>
+    const returnsPrevious = newPreviousPeriodMeasure(returns, [{ dataSet: DATASET, periodsAgo: 1 }], (m) =>
         m.alias("Previous Period"),
     );
     const [selectedMeasure, setSelectedMeasure] = useState(revenue);
@@ -92,50 +91,38 @@ const DashboardMain = ({ dimensionItem }) => {
         excludeCurrentPeriod,
     );
 
-    const changeMeasure = measure => {
+    const changeMeasure = (measure) => {
         setSelectedMeasure(measure);
     };
 
-    const handleChartDrill = drillEvent => {
-        //Only allow drill down for product category or brand
-        console.log("trying to drill");
-        const drillDimension = drillEvent.drillContext.intersection[2].header;
-        const newFilter = newPositiveAttributeFilter(filter.dimension, [
-            drillDimension.attributeHeaderItem.name,
-        ]);
+    const handleDrillDown = (drillDimensionName) => {
+        // Create a new dimension grain based on current active dimension
+        // (Product Category -> Product Id)
+        // (Customer Region -> Customer State)
         const newDimension =
-            dimensionItem.dimension === Ldm.ProductCategory
-                ? Ldm.Product.Default
-                : dimensionItem.dimension === Ldm.CustomerRegion
-                ? Ldm.CustomerState
-                : Ldm.CampaignName;
-        setFilter({ attributeFilter: newFilter, dimension: newDimension });
-        setBreadCrumbItems([
-            dimensionItem,
-            { label: drillDimension.attributeHeaderItem.name, dimension: null, icon: null },
-        ]);
-    };
+            dimensionItem.dimension === Ldm.ProductCategory ? Ldm.Product.Default : Ldm.CustomerState;
 
-    const handleTableDrill = drillEvent => {
-        //Only allow drill down for product category or brand
-        const drillDimension = drillEvent.drillContext.intersection[1].header;
-        const newFilter = newPositiveAttributeFilter(filter.dimension, [
-            drillDimension.attributeHeaderItem.name,
-        ]);
-        setFilter({ attributeFilter: newFilter, dimension: Ldm.Product.Default });
-        setBreadCrumbItems([
-            dimensionItem,
-            { label: drillDimension.attributeHeaderItem.name, dimension: null, icon: null },
-        ]);
+        // Create filter based on drill dimension name
+        const newFilter = newPositiveAttributeFilter(filter.dimension, [drillDimensionName]);
+
+        setFilter({ attributeFilter: newFilter, dimension: newDimension });
+        setBreadCrumbItems([dimensionItem, { label: drillDimensionName, dimension: null, icon: null }]);
     };
 
     const isDrillable = () => {
-       // console.log("checking to see if we can drill");
-       // debugger;
+        // console.log("checking to see if we can drill");
+        // debugger;
         return (
             filter.dimension.attribute.localIdentifier === Ldm.ProductCategory.attribute.localIdentifier ||
             filter.dimension.attribute.localIdentifier === Ldm.CustomerRegion.attribute.localIdentifier
         );
+    };
+
+    const removeBreadCrumbChildren = (parentIndex) => {
+        if (parentIndex === breadCrumbItems.length - 1) return;
+        breadCrumbItems.splice(parentIndex + 1, breadCrumbItems.length - parentIndex);
+        setFilter({ attributeFilter: null, dimension: breadCrumbItems[parentIndex].dimension });
+        setBreadCrumbItems(breadCrumbItems);
     };
 
     return (
@@ -145,14 +132,11 @@ const DashboardMain = ({ dimensionItem }) => {
                     <DashboardBreadcrumbs
                         breadCrumbItems={breadCrumbItems}
                         onClick={(item, index) => {
-                            if (item.dimension) {
-                                setBreadCrumbItems([item]);
-                                setFilter({ attributeFilter: null, dimension: item.dimension });
-                            }
+                            console.log("index = " + index);
+                            removeBreadCrumbChildren(index);
                         }}
                         onDelete={(item, index) => {
-                            setBreadCrumbItems([breadCrumbItems[0]]);
-                            setFilter({ attributeFilter: null, dimension: breadCrumbItems[0].dimension });
+                            removeBreadCrumbChildren(index - 1);
                         }}
                     />
                 </div>
@@ -176,7 +160,7 @@ const DashboardMain = ({ dimensionItem }) => {
             <div className={styles.KPIs}>
                 <div
                     className={cx(styles.KPI, selectedMeasure === revenue ? styles.Active : null)}
-                    onClick={e => changeMeasure(revenue)}
+                    onClick={(e) => changeMeasure(revenue)}
                 >
                     <span className={styles.Title}>Revenue</span>
                     <Headline
@@ -187,7 +171,7 @@ const DashboardMain = ({ dimensionItem }) => {
                 </div>
                 <div
                     className={cx(styles.KPI, selectedMeasure === orders ? styles.Active : null)}
-                    onClick={e => changeMeasure(orders)}
+                    onClick={(e) => changeMeasure(orders)}
                 >
                     <span className={styles.Title}>Orders</span>
                     <Headline
@@ -198,7 +182,7 @@ const DashboardMain = ({ dimensionItem }) => {
                 </div>
                 <div
                     className={cx(styles.KPI, selectedMeasure === returnRevenue ? styles.Active : null)}
-                    onClick={e => changeMeasure(returnRevenue)}
+                    onClick={(e) => changeMeasure(returnRevenue)}
                 >
                     <span className={styles.Title}>Return Amount</span>
                     <Headline
@@ -209,7 +193,7 @@ const DashboardMain = ({ dimensionItem }) => {
                 </div>
                 <div
                     className={cx(styles.KPI, selectedMeasure === returns ? styles.Active : null)}
-                    onClick={e => changeMeasure(returns)}
+                    onClick={(e) => changeMeasure(returns)}
                 >
                     <span className={styles.Title}>Returns</span>
                     <Headline
@@ -230,21 +214,36 @@ const DashboardMain = ({ dimensionItem }) => {
                             ? [HeaderPredicates.localIdentifierMatch(selectedMeasure.measure.localIdentifier)]
                             : []
                     }
-                    onDrill={handleChartDrill}
+                    onDrill={(drillEvent) =>
+                        handleDrillDown(
+                            drillEvent.drillContext.intersection[2].header.attributeHeaderItem.name,
+                        )
+                    }
                 />
             </div>
-
             <div className={styles.Table}>
                 <PivotTable
                     measures={[Ldm.Revenue, Ldm.NrOfValidOrders, Ldm.RevenueReturns, Ldm.NrOrdersReturns]}
                     rows={
-                        filter.dimension === Ldm.CustomerRegion
+                        filter.dimension === Ldm.Product.Default
+                            ? [Ldm.ProductCategory, Ldm.Product.Default]
+                            : filter.dimension === Ldm.CustomerState
                             ? [Ldm.CustomerRegion, Ldm.CustomerState]
                             : [filter.dimension]
+                        /*
+                        filter.dimension === Ldm.ProductCategory || Ldm.ProductID ?
+                            [filter.dimension]
+                            : filter.dimension === Ldm.CustomerRegion
+                            ? [Ldm.CustomerRegion, Ldm.CustomerState]
+                            : [Ldm.CustomerState]
+                         /*   
+                        filter.dimension === Ldm.CustomerRegion || Ldm.CustomerState
+                            ? [Ldm.CustomerRegion, Ldm.CustomerState]
+                            : [filter.dimension] */
                     }
                     config={{
                         columnSizing: {
-                            defaultWidth: "viewport",
+                            defaultWidth: "autoresizeAll",
                             growToFit: true,
                         },
                     }}
@@ -252,6 +251,9 @@ const DashboardMain = ({ dimensionItem }) => {
                     drillableItems={
                         isDrillable()
                             ? [
+                                  HeaderPredicates.localIdentifierMatch(
+                                      filter.dimension.attribute.localIdentifier,
+                                  ),
                                   HeaderPredicates.localIdentifierMatch(revenue.measure.localIdentifier),
                                   HeaderPredicates.localIdentifierMatch(orders.measure.localIdentifier),
                                   HeaderPredicates.localIdentifierMatch(
@@ -261,7 +263,7 @@ const DashboardMain = ({ dimensionItem }) => {
                               ]
                             : []
                     }
-                    onDrill={handleTableDrill}
+                    onDrill={(drillEvent) => handleDrillDown(drillEvent.drillContext.row[0].name)}
                 />
             </div>
         </div>
