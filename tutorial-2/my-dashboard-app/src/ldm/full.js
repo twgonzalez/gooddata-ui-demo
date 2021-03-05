@@ -1,6 +1,6 @@
 /* eslint-disable */
 
-/* THIS FILE WAS AUTO-GENERATED USING CATALOG EXPORTER; YOU SHOULD NOT EDIT THIS FILE; GENERATE TIME: 2021-01-29T00:37:24.648Z; */
+/* THIS FILE WAS AUTO-GENERATED USING CATALOG EXPORTER; YOU SHOULD NOT EDIT THIS FILE; GENERATE TIME: 2021-03-05T22:18:52.871Z; */
 import { newAttribute, newMeasure, idRef } from '@gooddata/sdk-model';
 /**
  * Attribute Title: Campaign Category
