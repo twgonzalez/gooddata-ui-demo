@@ -46,7 +46,7 @@ const DashboardMain = () => {
     const dateFilter = DateFilterHelpers.mapOptionToAfm(
         dateFilterOption,
         {
-            identifier: DATASET,
+            identifier: DATASET.identifier,
         },
         false,
     );
