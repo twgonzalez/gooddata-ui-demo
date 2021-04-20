@@ -1,1 +1,0 @@
-# gooddata-ui-demo
