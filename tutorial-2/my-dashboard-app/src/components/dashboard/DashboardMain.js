@@ -9,11 +9,11 @@ import styles from './DashboardMain.module.scss';
 import '@gooddata/sdk-ui-filters/styles/css/main.css';
 
 const DashboardMain = () => {
-    // This is used to identifiy the data set we will use for all date filtering - better explanatoin ??
+    // This is used to identifiy the data set we will use for all date filtering
     const DATASET = Ldm.DateDatasets.Date.identifier;
 
-    // We enumerate all of the measures we want to display in our headline components, as well as their corresponding previous
-    // period measures.
+    // We enumerate all of the measures we want to display in our headline components,
+    // as well as their corresponding previous period measures
     const revenue = Ldm.Revenue;
     const revenuePrevious = newPreviousPeriodMeasure(revenue, [{ dataSet: DATASET, periodsAgo: 1 }], (m) =>
         m.alias('Previous Period'),
@@ -36,7 +36,7 @@ const DashboardMain = () => {
         m.alias('Previous Period'),
     );
 
-    // We use this to set up our
+    // We use this to set the default date filter to All Time
     const [dateFilterOption, setDateFilterOption] = useState(defaultDateFilterOptions.allTime);
 
     const onApplyDateFilter = (dateFilterOption) => {
