@@ -1,20 +1,30 @@
 # GoodData.UI Dashboard Demo
 
-This repository contains a source code for the [GoodData University](https://university.gooddata.com/) course [Building Basic Dashboards](https://university.gooddata.com/gdui-demo-building-basic-dashboards).
+This repository contains a source code for the [GoodData University](https://university.gooddata.com/) courses:
 
-## Live Demo
+* **Building Basic Dashboards**
+  * Course: https://university.gooddata.com/gdui-demo-building-basic-dashboards
+  * Source: [tutorial-2/my-dashboard-app folder](tutorial-2/my-dashboard-app)
+  * Live demo: http://use.gd/gooddata-ui-demo-tutorial-2
 
-http://use.gd/gooddata-ui-demo-tutorial-2
 
-https://gooddata-demo.s3.amazonaws.com/gooddata-ui-demo-tutorial-2/index.html
+* **Making Dashboards Interactive**
+  * Course: https://university.gooddata.com/gdui-demo-making-dashboards-interactive
+  * Source: [tutorial-3/my-dashboard-app](tutorial-3/my-dashboard-app)
+  * Live demo: http://use.gd/gooddata-ui-demo-tutorial-3
+
+
+* **Building Custom Visualizaions**
+  * Coming soon
 
 ## How To Run Locally
 
 1. `git clone https://github.com/gooddata/gooddata-ui-demo.git`
-1. `cd gooddata-ui-demo/tutorial-2/my-dashboard-app/`
+1. `cd gooddata-ui-demo/tutorial-2/my-dashboard-app/` # or tutorial-3, or tutorial-4
 1. `yarn install`
 1. `yarn start`
 
 ## Screnshots
 
-![](tutorial-2/my-dashboard-app/public/my-dashboard.png)
+![Building Basic Dashboards](tutorial-2/my-dashboard-app/public/my-dashboard.png)
+![Making Dashboards Interactive](tutorial-3/my-dashboard-app/public/my-dashboard.png)
