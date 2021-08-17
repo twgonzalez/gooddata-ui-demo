@@ -14,6 +14,7 @@ import {
   newTwoDimensional,
   newDimension,
 } from "@gooddata/sdk-model";
+import { DataViewFacade } from "@gooddata/sdk-ui";
 import { workspace } from "../../constants";
 import * as Ldm from "../../ldm/full";
 
@@ -43,6 +44,19 @@ const DashboardAreaChart = ({ measures, viewBy, stackBy, filters }) => {
 
       // const firstPage = await result.readWindow([0, 0], [10, 10]);
       const allData = await result.readAll();
+      const dataView = DataViewFacade.for(allData);
+      console.log("dataView", dataView);
+
+      const data = dataView
+        .data()
+        .series()
+        .firstForMeasure(Ldm.Revenue)
+        .dataPoints()
+        .map((dataPoint) => ({
+          x: dataPoint.sliceDesc.headers[0].attributeHeaderItem.name,
+          y: parseFloat(dataPoint.rawValue),
+        }));
+      console.log("data", data);
 
       console.log("yep we got a result length = " + allData.data[0].length);
     } catch (error) {
