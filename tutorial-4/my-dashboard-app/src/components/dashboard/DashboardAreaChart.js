@@ -35,11 +35,16 @@ const DashboardAreaChart = ({ measures, viewBy, stackBy, filters }) => {
         .workspace(workspace)
         .execution()
         .forItems(
-          [Ldm.Revenue, Ldm.ProductCategory, Ldm.DateDatasets.Date.USWeekYear],
+          [Ldm.Revenue, Ldm.ProductCategory, Ldm.DateDatasets.Date.Month.Short],
           filters
         )
         // .withSorting(...sorting)
-        // .withDimensions([newDimension([Ldm.ProductCategory])])
+        .withDimensions(
+          ...newTwoDimensional(
+            [Ldm.ProductCategory, Ldm.DateDatasets.Date.Month.Short],
+            [MeasureGroupIdentifier]
+          )
+        )
         .execute();
 
       // const firstPage = await result.readWindow([0, 0], [10, 10]);
@@ -47,15 +52,19 @@ const DashboardAreaChart = ({ measures, viewBy, stackBy, filters }) => {
       const dataView = DataViewFacade.for(allData);
       console.log("dataView", dataView);
 
-      const data = dataView
-        .data()
-        .series()
-        .firstForMeasure(Ldm.Revenue)
-        .dataPoints()
-        .map((dataPoint) => ({
-          x: dataPoint.sliceDesc.headers[0].attributeHeaderItem.name,
-          y: parseFloat(dataPoint.rawValue),
-        }));
+      const slices = dataView.data().slices().toArray();
+      console.log("slices", slices);
+
+      const data = slices.map((slice) => {
+        const sliceTitles = slice.sliceTitles();
+        const revenue = slice.dataPoints()[0];
+
+        return {
+          x1: sliceTitles[0],
+          x2: sliceTitles[1],
+          y: revenue.formattedValue(),
+        };
+      });
       console.log("data", data);
 
       console.log("yep we got a result length = " + allData.data[0].length);
