@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import {
   AreaChart,
   Area,
@@ -14,18 +14,25 @@ import {
   newTwoDimensional,
   newDimension,
 } from "@gooddata/sdk-model";
+import { DataViewFacade } from "@gooddata/sdk-ui";
 import { workspace } from "../../constants";
 import * as Ldm from "../../ldm/full";
+import { convertPostMessageToDrillablePredicates } from "@gooddata/sdk-ui-ext/esm/internal/utils/drillablePredicates";
 
-const DashboardAreaChart = ({ measures, viewBy, stackBy, filters }) => {
+const DashboardAreaChart = ({ measure, viewBy, stackBy, filters }) => {
   const backend = createBackend();
 
   const [result, setResult] = React.useState(null);
-
-  const dimensions = newTwoDimensional(
-    [MeasureGroupIdentifier],
-    [Ldm.ProductCategory]
-  );
+  const [chartData, setChartData] = React.useState([]);
+  const [series, setSeries] = React.useState([]);
+  const colors = [
+    "#161E5E",
+    "#223B89",
+    "#316BA7",
+    "#BEE0CC",
+    "#419DC5",
+    "#70C3D0",
+  ];
 
   const fetchData = async () => {
     // debugger;
@@ -33,108 +40,108 @@ const DashboardAreaChart = ({ measures, viewBy, stackBy, filters }) => {
       const result = await backend
         .workspace(workspace)
         .execution()
-        .forItems(
-          [Ldm.Revenue, Ldm.ProductCategory, Ldm.DateDatasets.Date.USWeekYear],
-          filters
+        .forItems([measure, viewBy, ...stackBy], filters)
+        .withDimensions(
+          ...newTwoDimensional([viewBy, ...stackBy], [MeasureGroupIdentifier])
         )
-        // .withSorting(...sorting)
-        // .withDimensions([newDimension([Ldm.ProductCategory])])
         .execute();
 
       // const firstPage = await result.readWindow([0, 0], [10, 10]);
       const allData = await result.readAll();
+      const dataView = DataViewFacade.for(allData);
 
-      console.log("yep we got a result length = " + allData.data[0].length);
+      const slices = dataView.data().slices().toArray();
+
+      const series = new Set();
+      const xAxisTicks = new Set();
+      const datums = slices.map((slice) => {
+        const sliceTitles = slice.sliceTitles();
+        const plotValue = slice.dataPoints()[0];
+
+        series.add(sliceTitles[1]);
+        xAxisTicks.add(sliceTitles[0]);
+
+        return {
+          seriesPlot: sliceTitles[1],
+          xPlot: sliceTitles[0],
+          y: Number(plotValue.rawValue),
+        };
+      });
+
+      const plots = [];
+
+      xAxisTicks.forEach((xTick) => {
+        let dataPoint = {};
+        dataPoint.xAxis = xTick;
+        series.forEach((seriesPlot) => {
+          dataPoint[seriesPlot] = datums.filter(
+            (datum) => datum.seriesPlot === seriesPlot && datum.xPlot === xTick
+          )[0].y;
+        });
+        plots.push(dataPoint);
+      });
+
+      //  console.log("data", data);
+      setChartData(plots);
+      setSeries([...series]);
+      console.log("dataFetched()");
     } catch (error) {
       console.log("Yep, we got an error " + error);
     }
   };
 
-  fetchData();
+  if (chartData.length === 0) {
+    fetchData();
+  }
 
-  const data = [
-    {
-      name: "Page A",
-      uv: 4000,
-      pv: 2400,
-      amt: 2400,
-    },
-    {
-      name: "Page B",
-      uv: 3000,
-      pv: 1398,
-      amt: 2210,
-    },
-    {
-      name: "Page C",
-      uv: 2000,
-      pv: 9800,
-      amt: 2290,
-    },
-    {
-      name: "Page D",
-      uv: 2780,
-      pv: 3908,
-      amt: 2000,
-    },
-    {
-      name: "Page E",
-      uv: 1890,
-      pv: 4800,
-      amt: 2181,
-    },
-    {
-      name: "Page F",
-      uv: 2390,
-      pv: 3800,
-      amt: 2500,
-    },
-    {
-      name: "Page G",
-      uv: 3490,
-      pv: 4300,
-      amt: 2100,
-    },
-  ];
+  useEffect(() => {
+    fetchData();
+    /* eslint-disable-next-line */
+  }, [measure, viewBy, stackBy]);
 
   return (
     <ResponsiveContainer width="100%" height="100%">
       <AreaChart
         width={500}
         height={400}
-        data={data}
+        data={chartData}
         margin={{
-          top: 10,
+          top: 20,
           right: 30,
-          left: 0,
-          bottom: 0,
+          left: 50,
+          bottom: 15,
         }}
       >
         <CartesianGrid strokeDasharray="3 3" />
-        <XAxis dataKey="name" />
-        <YAxis />
-        <Tooltip />
-        <Area
-          type="monotone"
-          dataKey="uv"
-          stackId="1"
-          stroke="#8884d8"
-          fill="#8884d8"
+        <XAxis dataKey="xAxis" />
+        <YAxis
+          tickFormatter={(value) =>
+            new Intl.NumberFormat("en", {
+              style: "currency",
+              currency: "USD",
+            }).format(value)
+          }
         />
-        <Area
-          type="monotone"
-          dataKey="pv"
-          stackId="1"
-          stroke="#82ca9d"
-          fill="#82ca9d"
+        <Tooltip
+          formatter={(value) =>
+            new Intl.NumberFormat("en", {
+              style: "currency",
+              currency: "USD",
+            }).format(value)
+          }
         />
-        <Area
-          type="monotone"
-          dataKey="amt"
-          stackId="1"
-          stroke="#ffc658"
-          fill="#ffc658"
-        />
+        {series.map((d, i) => {
+          return (
+            <Area
+              type="monotone"
+              dataKey={d}
+              stackId="1"
+              stroke={colors[i % colors.length]}
+              fill={colors[i % colors.length]}
+              key={i}
+            />
+          );
+        })}
       </AreaChart>
     </ResponsiveContainer>
   );

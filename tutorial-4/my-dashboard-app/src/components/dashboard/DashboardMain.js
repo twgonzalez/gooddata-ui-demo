@@ -257,7 +257,7 @@ const DashboardMain = ({ dimensionItem }) => {
       </div>
       <div className={styles.Chart}>
         <DashboardAreaChart
-          measures={[selectedMeasure]}
+          measure={selectedMeasure}
           viewBy={chartDateGrain}
           stackBy={
             dimension === Ldm.Product.Default
