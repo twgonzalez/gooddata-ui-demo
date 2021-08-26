@@ -73,7 +73,7 @@ function EnhancedTableHead(props) {
 }
 
 EnhancedTableHead.propTypes = {
-  headersCells: PropTypes.array,
+  headerCells: PropTypes.array,
   classes: PropTypes.object.isRequired,
   onRequestSort: PropTypes.func.isRequired,
   order: PropTypes.oneOf(["asc", "desc"]).isRequired,
@@ -84,9 +84,11 @@ EnhancedTableHead.propTypes = {
 const useStyles = makeStyles((theme) => ({
   root: {
     width: "100%",
+    height: "100%",
   },
   paper: {
     width: "100%",
+    height: "100%",
     padding: "10px",
     marginBottom: theme.spacing(2),
   },

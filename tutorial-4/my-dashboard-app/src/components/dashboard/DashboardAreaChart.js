@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import {
   AreaChart,
   Area,
@@ -8,23 +8,16 @@ import {
   Tooltip,
   ResponsiveContainer,
 } from "recharts";
-import { createBackend } from "../../contexts/Auth/backend";
-import {
-  MeasureGroupIdentifier,
-  newTwoDimensional,
-  newDimension,
-} from "@gooddata/sdk-model";
+import { MeasureGroupIdentifier, newTwoDimensional } from "@gooddata/sdk-model";
 import { DataViewFacade } from "@gooddata/sdk-ui";
 import { workspace } from "../../constants";
-import * as Ldm from "../../ldm/full";
-import { convertPostMessageToDrillablePredicates } from "@gooddata/sdk-ui-ext/esm/internal/utils/drillablePredicates";
+import { useBackend } from "../../contexts/Auth";
 
 const DashboardAreaChart = ({ measure, viewBy, stackBy, filters }) => {
-  const backend = createBackend();
+  const backend = useBackend();
 
-  const [result, setResult] = React.useState(null);
-  const [chartData, setChartData] = React.useState([]);
-  const [series, setSeries] = React.useState([]);
+  const [chartData, setChartData] = useState([]);
+  const [series, setSeries] = useState([]);
   const colors = [
     "#161E5E",
     "#223B89",
@@ -34,70 +27,40 @@ const DashboardAreaChart = ({ measure, viewBy, stackBy, filters }) => {
     "#70C3D0",
   ];
 
-  const fetchData = async () => {
-    // debugger;
-    try {
+  useEffect(() => {
+    const fetchData = async () => {
       const result = await backend
         .workspace(workspace)
         .execution()
-        .forItems([measure, viewBy, ...stackBy], filters)
+        .forItems([measure, viewBy, stackBy], filters)
         .withDimensions(
-          ...newTwoDimensional([viewBy, ...stackBy], [MeasureGroupIdentifier])
+          ...newTwoDimensional([viewBy], [MeasureGroupIdentifier, stackBy])
         )
         .execute();
 
-      // const firstPage = await result.readWindow([0, 0], [10, 10]);
       const allData = await result.readAll();
       const dataView = DataViewFacade.for(allData);
 
-      const slices = dataView.data().slices().toArray();
+      const data = dataView.dataView.data;
+      const datums = dataView.dataView.headerItems[0][0].map(
+        (item) => item["attributeHeaderItem"].name
+      );
+      const categories = dataView.dataView.headerItems[1][1].map(
+        (item) => item["attributeHeaderItem"].name
+      );
+      const plots = data.map((row, i) => ({
+        xAxis: datums[i],
+        ...row.reduce((acc, value, j) => {
+          acc[categories[j]] = parseFloat(value);
+          return acc;
+        }, {}),
+      }));
 
-      const series = new Set();
-      const xAxisTicks = new Set();
-      const datums = slices.map((slice) => {
-        const sliceTitles = slice.sliceTitles();
-        const plotValue = slice.dataPoints()[0];
-
-        series.add(sliceTitles[1]);
-        xAxisTicks.add(sliceTitles[0]);
-
-        return {
-          seriesPlot: sliceTitles[1],
-          xPlot: sliceTitles[0],
-          y: Number(plotValue.rawValue),
-        };
-      });
-
-      const plots = [];
-
-      xAxisTicks.forEach((xTick) => {
-        let dataPoint = {};
-        dataPoint.xAxis = xTick;
-        series.forEach((seriesPlot) => {
-          dataPoint[seriesPlot] = datums.filter(
-            (datum) => datum.seriesPlot === seriesPlot && datum.xPlot === xTick
-          )[0].y;
-        });
-        plots.push(dataPoint);
-      });
-
-      //  console.log("data", data);
       setChartData(plots);
-      setSeries([...series]);
-      console.log("dataFetched()");
-    } catch (error) {
-      console.log("Yep, we got an error " + error);
-    }
-  };
-
-  if (chartData.length === 0) {
+      setSeries(categories);
+    };
     fetchData();
-  }
-
-  useEffect(() => {
-    fetchData();
-    /* eslint-disable-next-line */
-  }, [measure, viewBy, stackBy]);
+  }, [measure, viewBy, stackBy, filters, backend]);
 
   return (
     <ResponsiveContainer width="100%" height="100%">

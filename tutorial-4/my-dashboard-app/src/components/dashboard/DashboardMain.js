@@ -4,7 +4,6 @@ import {
   newPreviousPeriodMeasure,
   newPositiveAttributeFilter,
   attributeIdentifier,
-  measureIdentifier,
 } from "@gooddata/sdk-model";
 import {
   DateFilter,
@@ -261,10 +260,10 @@ const DashboardMain = ({ dimensionItem }) => {
           viewBy={chartDateGrain}
           stackBy={
             dimension === Ldm.Product.Default
-              ? [Ldm.ProductCategory, Ldm.Product.Default]
+              ? Ldm.ProductCategory
               : dimension === Ldm.CustomerState
-              ? [Ldm.CustomerRegion, Ldm.CustomerState]
-              : [dimension]
+              ? Ldm.CustomerRegion
+              : dimension
           }
           filters={[dateFilter, attributeFilter]}
         />
