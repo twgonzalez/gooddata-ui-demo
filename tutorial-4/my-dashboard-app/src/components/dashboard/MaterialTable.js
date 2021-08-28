@@ -90,7 +90,8 @@ const useStyles = makeStyles((theme) => ({
     width: "100%",
     height: "100%",
     padding: "10px",
-    marginBottom: theme.spacing(2),
+    marginBottom: "0px",
+    boxShadow: "none",
   },
   table: {
     minWidth: 750,

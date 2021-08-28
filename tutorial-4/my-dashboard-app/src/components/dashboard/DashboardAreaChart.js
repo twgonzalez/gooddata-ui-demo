@@ -8,6 +8,7 @@ import {
   Tooltip,
   ResponsiveContainer,
 } from "recharts";
+import { numberFormat } from "@gooddata/numberjs";
 import { MeasureGroupIdentifier, newTwoDimensional } from "@gooddata/sdk-model";
 import { DataViewFacade } from "@gooddata/sdk-ui";
 import { workspace } from "../../constants";
@@ -17,6 +18,7 @@ const DashboardAreaChart = ({ measure, viewBy, stackBy, filters }) => {
   const backend = useBackend();
 
   const [chartData, setChartData] = useState([]);
+  const [measureFormat, setMeasureFormat] = useState("#,###");
   const [series, setSeries] = useState([]);
   const colors = [
     "#161E5E",
@@ -41,6 +43,8 @@ const DashboardAreaChart = ({ measure, viewBy, stackBy, filters }) => {
       const allData = await result.readAll();
       const dataView = DataViewFacade.for(allData);
 
+      const series = dataView.data().series().toArray();
+
       const data = dataView.dataView.data;
       const datums = dataView.dataView.headerItems[0][0].map(
         (item) => item["attributeHeaderItem"].name
@@ -56,6 +60,7 @@ const DashboardAreaChart = ({ measure, viewBy, stackBy, filters }) => {
         }, {}),
       }));
 
+      setMeasureFormat(series[0].measureFormat());
       setChartData(plots);
       setSeries(categories);
     };
@@ -79,18 +84,12 @@ const DashboardAreaChart = ({ measure, viewBy, stackBy, filters }) => {
         <XAxis dataKey="xAxis" />
         <YAxis
           tickFormatter={(value) =>
-            new Intl.NumberFormat("en", {
-              style: "currency",
-              currency: "USD",
-            }).format(value)
+            numberFormat(value === -Infinity ? 0 : value, measureFormat)
           }
         />
         <Tooltip
           formatter={(value) =>
-            new Intl.NumberFormat("en", {
-              style: "currency",
-              currency: "USD",
-            }).format(value)
+            numberFormat(value === -Infinity ? 0 : value, measureFormat)
           }
         />
         {series.map((d, i) => {

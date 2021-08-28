@@ -258,13 +258,7 @@ const DashboardMain = ({ dimensionItem }) => {
         <DashboardAreaChart
           measure={selectedMeasure}
           viewBy={chartDateGrain}
-          stackBy={
-            dimension === Ldm.Product.Default
-              ? Ldm.ProductCategory
-              : dimension === Ldm.CustomerState
-              ? Ldm.CustomerRegion
-              : dimension
-          }
+          stackBy={dimension}
           filters={[dateFilter, attributeFilter]}
         />
       </div>
@@ -277,13 +271,7 @@ const DashboardMain = ({ dimensionItem }) => {
             Ldm.NrOrdersReturns,
           ]}
           filters={[dateFilter, attributeFilter]}
-          dimensions={
-            dimension === Ldm.Product.Default
-              ? [Ldm.ProductCategory, Ldm.Product.Default]
-              : dimension === Ldm.CustomerState
-              ? [Ldm.CustomerRegion, Ldm.CustomerState]
-              : [dimension]
-          }
+          dimensions={[dimension]}
           handleRowClick={handleRowClick}
         />
       </div>
