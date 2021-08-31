@@ -19,13 +19,14 @@ const DashboardAreaChart = ({
   viewBy,
   stackBy,
   filters,
-  handleAreaClick,
+  handleAreaClick = (d, i) => {},
 }) => {
   const backend = useBackend();
 
   const [chartData, setChartData] = useState([]);
   const [measureFormat, setMeasureFormat] = useState("#,###");
   const [series, setSeries] = useState([]);
+  const [hoverDatum, setHoverDatum] = useState(null);
   const colors = [
     "#161E5E",
     "#223B89",
@@ -35,10 +36,12 @@ const DashboardAreaChart = ({
     "#70C3D0",
   ];
 
-  const handleClick = (datum, index) => {
-    if (handleAreaClick) {
-      handleAreaClick(datum, index);
-    }
+  const handleMouseEnter = (d) => {
+    setHoverDatum(d);
+  };
+
+  const handleMouseLeave = () => {
+    setHoverDatum(null);
   };
 
   useEffect(() => {
@@ -112,10 +115,11 @@ const DashboardAreaChart = ({
               stackId="1"
               stroke={colors[i % colors.length]}
               fill={colors[i % colors.length]}
+              fillOpacity={d === hoverDatum ? 1 : 0.65}
               key={i}
-              onClick={() => {
-                handleClick(d, i);
-              }}
+              onClick={() => handleAreaClick(d, i)}
+              onMouseEnter={() => handleMouseEnter(d)}
+              onMouseLeave={() => handleMouseLeave()}
             />
           );
         })}
