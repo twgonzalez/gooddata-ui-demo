@@ -133,14 +133,12 @@ const DashboardMain = ({ dimensionItem }) => {
     };
 
     const handleRowClick = (row, index) => {
-        console.log(row, index);
         if (isDrillable() === true) {
             handleDrillDown(row[0]);
         }
     };
 
     const handleAreaClick = (d, i) => {
-        console.log(d, i);
         if (isDrillable() === true) {
             handleDrillDown(d);
         }

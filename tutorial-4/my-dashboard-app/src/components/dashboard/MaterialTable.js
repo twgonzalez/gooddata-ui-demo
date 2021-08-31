@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import { makeStyles } from '@material-ui/core/styles';
 import Paper from '@material-ui/core/Paper';
@@ -114,13 +114,11 @@ const useStyles = makeStyles((theme) => ({
 
 const MaterialTable = ({ columns, rows, rowClickCallback }) => {
     const classes = useStyles();
-    const [order, setOrder] = React.useState('asc');
-    const [orderBy, setOrderBy] = React.useState(0);
-    const [page, setPage] = React.useState(0);
-    const [rowsPerPage, setRowsPerPage] = React.useState(5);
+    const [order, setOrder] = useState('asc');
+    const [orderBy, setOrderBy] = useState(0);
+    const [page, setPage] = useState(0);
+    const [rowsPerPage, setRowsPerPage] = useState(5);
     const dense = false;
-
-    console.log('rows.length = ' + rows.length);
 
     const handleRequestSort = (event, property) => {
         const isAsc = orderBy === property && order === 'asc';

@@ -10,21 +10,15 @@ const DashboardDataTable = ({ measures, dimensions, filters, handleRowClick }) =
                 if (isLoading) {
                     return <div>Loading data...</div>;
                 } else if (error) {
-                    //   debugger;
-                    console.log(error.message);
                     return <div>There was an error </div>;
                 }
 
                 if (!result) {
-                    console.log('no results ...');
                     return <div>No results..</div>;
                 }
 
-                // access result by slices (rows);
                 const slices = result.data().slices().toArray();
                 const series = result.data().series().toArray();
-
-                // debugger;
 
                 const dimensionsColumns = result.data().slicesCollection.descriptors.map((descriptor) => {
                     return {
