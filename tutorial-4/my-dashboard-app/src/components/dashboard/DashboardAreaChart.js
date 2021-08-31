@@ -14,7 +14,13 @@ import { DataViewFacade } from "@gooddata/sdk-ui";
 import { workspace } from "../../constants";
 import { useBackend } from "../../contexts/Auth";
 
-const DashboardAreaChart = ({ measure, viewBy, stackBy, filters }) => {
+const DashboardAreaChart = ({
+  measure,
+  viewBy,
+  stackBy,
+  filters,
+  handleAreaClick,
+}) => {
   const backend = useBackend();
 
   const [chartData, setChartData] = useState([]);
@@ -28,6 +34,12 @@ const DashboardAreaChart = ({ measure, viewBy, stackBy, filters }) => {
     "#419DC5",
     "#70C3D0",
   ];
+
+  const handleClick = (datum, index) => {
+    if (handleAreaClick) {
+      handleAreaClick(datum, index);
+    }
+  };
 
   useEffect(() => {
     const fetchData = async () => {
@@ -101,6 +113,9 @@ const DashboardAreaChart = ({ measure, viewBy, stackBy, filters }) => {
               stroke={colors[i % colors.length]}
               fill={colors[i % colors.length]}
               key={i}
+              onClick={() => {
+                handleClick(d, i);
+              }}
             />
           );
         })}

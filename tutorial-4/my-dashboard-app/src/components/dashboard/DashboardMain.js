@@ -169,6 +169,13 @@ const DashboardMain = ({ dimensionItem }) => {
     }
   };
 
+  const handleAreaClick = (d, i) => {
+    console.log(d, i);
+    if (isDrillable() === true) {
+      handleDrillDown(d);
+    }
+  };
+
   return (
     <div className={styles.DashboardMain}>
       <div className={styles.Filters}>
@@ -260,6 +267,7 @@ const DashboardMain = ({ dimensionItem }) => {
           viewBy={chartDateGrain}
           stackBy={dimension}
           filters={[dateFilter, attributeFilter]}
+          handleAreaClick={handleAreaClick}
         />
       </div>
       <div className={styles.Table}>
