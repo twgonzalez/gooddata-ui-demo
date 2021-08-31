@@ -7,21 +7,23 @@ import Footer from "./Footer";
 import styles from "./Page.module.scss";
 
 const Page = ({
-    children,
-    className = null,
-    mainClassName = null,
-    title = "GoodData.UI Demo - Making Dashboards Interactive",
+  children,
+  className = null,
+  mainClassName = null,
+  title = "GoodData.UI Demo - Building Custom Visualizations",
 }) => {
-    return (
-        <div className={cx(styles.Page, className)}>
-            <Helmet>
-                <title>{title}</title>
-            </Helmet>
-            <Header />
-            <main className={cx(styles.Main, mainClassName, "s-page")}>{children}</main>
-            <Footer />
-        </div>
-    );
+  return (
+    <div className={cx(styles.Page, className)}>
+      <Helmet>
+        <title>{title}</title>
+      </Helmet>
+      <Header />
+      <main className={cx(styles.Main, mainClassName, "s-page")}>
+        {children}
+      </main>
+      <Footer />
+    </div>
+  );
 };
 
 export default Page;
