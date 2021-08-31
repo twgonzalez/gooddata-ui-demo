@@ -78,6 +78,7 @@ const DashboardAreaChart = ({ measure, viewBy, stackBy, filters, handleAreaClick
                     tickFormatter={(value) => numberFormat(value === -Infinity ? 0 : value, measureFormat)}
                 />
                 <Tooltip
+                    itemSorter={(item) => item.name.toString().charCodeAt(0) * -1}
                     formatter={(value) => numberFormat(value === -Infinity ? 0 : value, measureFormat)}
                 />
                 {series.map((d, i) => {
