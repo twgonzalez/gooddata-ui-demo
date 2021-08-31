@@ -38,8 +38,8 @@
         "refresh-ldm": "node ./scripts/refresh-ldm.js",
         "lint-dashboard": "eslint 'src/components/dashboard/*.{js,jsx}' 'src/routes/MyDashboard.js'",
         "format": "prettier --write 'src/components/dashboard/*.{js,jsx}' 'src/routes/MyDashboard.js'",
-        "buildgd": "cross-env PUBLIC_URL=/gooddata-ui-demo-tutorial-3 yarn build",
-        "syncgd": "s3cmd --config .s3cfg sync --delete-removed ./build/ s3://gooddata-demo/gooddata-ui-demo-tutorial-3/"
+        "buildgd": "cross-env PUBLIC_URL=/gooddata-ui-demo-tutorial-4 yarn build",
+        "syncgd": "s3cmd --config .s3cfg sync --delete-removed ./build/ s3://gooddata-demo/gooddata-ui-demo-tutorial-4/"
     },
     "eslintConfig": {
         "extends": "react-app"

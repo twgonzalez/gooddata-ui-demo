@@ -14,8 +14,11 @@ This repository contains a source code for the [GoodData University](https://uni
   * Live demo: http://use.gd/gooddata-ui-demo-tutorial-3
 
 
-* **Building Custom Visualizaions**
-  * Coming soon
+* **Building Custom Visualizations**
+  * Course: https://university.gooddata.com/gdui-demo-building-custom-visualizations
+  * Source: [tutorial-4/my-dashboard-app](tutorial-4/my-dashboard-app)
+  * Live demo: http://use.gd/gooddata-ui-demo-tutorial-4
+
 
 ## How To Run Locally
 
@@ -28,3 +31,4 @@ This repository contains a source code for the [GoodData University](https://uni
 
 ![Building Basic Dashboards](tutorial-2/my-dashboard-app/public/my-dashboard.png)
 ![Making Dashboards Interactive](tutorial-3/my-dashboard-app/public/my-dashboard.png)
+![Building Custom Visualizations](tutorial-4/my-dashboard-app/public/my-dashboard.png)
