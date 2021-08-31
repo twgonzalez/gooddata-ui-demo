@@ -75,11 +75,11 @@ const DashboardAreaChart = ({ measure, viewBy, stackBy, filters, handleAreaClick
                 <CartesianGrid strokeDasharray="3 3" />
                 <XAxis dataKey="xAxis" />
                 <YAxis
-                    tickFormatter={(value) => numberFormat(value === -Infinity ? 0 : value, measureFormat)}
+                    tickFormatter={(value) => numberFormat(value, measureFormat)}
                 />
                 <Tooltip
                     itemSorter={(item) => item.name.toString().charCodeAt(0) * -1}
-                    formatter={(value) => numberFormat(value === -Infinity ? 0 : value, measureFormat)}
+                    formatter={(value) => numberFormat(value, measureFormat)}
                 />
                 {series.map((d, i) => {
                     return (
