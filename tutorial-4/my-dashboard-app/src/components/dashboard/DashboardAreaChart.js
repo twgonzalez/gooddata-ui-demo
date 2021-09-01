@@ -73,6 +73,7 @@ const DashboardAreaChart = ({ measure, viewBy, stackBy, filters, handleAreaClick
                 {series.map((d, i) => {
                     return (
                         <Area
+                            cursor="pointer"
                             type="monotone"
                             dataKey={d}
                             stackId="1"
