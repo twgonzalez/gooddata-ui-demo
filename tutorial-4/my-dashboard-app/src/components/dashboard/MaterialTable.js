@@ -11,7 +11,7 @@ import TablePagination from '@material-ui/core/TablePagination';
 import TableRow from '@material-ui/core/TableRow';
 import TableSortLabel from '@material-ui/core/TableSortLabel';
 
-function descendingComparator(a, b, orderBy) {
+const descendingComparator = (a, b, orderBy) => {
     if (b[orderBy] < a[orderBy]) {
         return -1;
     }
@@ -19,25 +19,25 @@ function descendingComparator(a, b, orderBy) {
         return 1;
     }
     return 0;
-}
+};
 
-function getComparator(order, orderBy) {
-    return order === 'desc'
+const getComparator = (order, orderBy) =>
+    order === 'desc'
         ? (a, b) => descendingComparator(a, b, orderBy)
         : (a, b) => -descendingComparator(a, b, orderBy);
-}
-
-function stableSort(array, comparator) {
+const stableSort = (array, comparator) => {
     const stabilizedThis = array.map((el, index) => [el, index]);
+
     stabilizedThis.sort((a, b) => {
         const order = comparator(a[0], b[0]);
         if (order !== 0) return order;
         return a[1] - b[1];
     });
-    return stabilizedThis.map((el) => el[0]);
-}
 
-function EnhancedTableHead(props) {
+    return stabilizedThis.map((el) => el[0]);
+};
+
+const EnhancedTableHead = (props) => {
     const { headerCells, classes, order, orderBy, onRequestSort } = props;
     const createSortHandler = (property) => (event) => {
         onRequestSort(event, property);
@@ -70,7 +70,7 @@ function EnhancedTableHead(props) {
             </TableRow>
         </TableHead>
     );
-}
+};
 
 EnhancedTableHead.propTypes = {
     headerCells: PropTypes.array,
@@ -81,7 +81,7 @@ EnhancedTableHead.propTypes = {
     rowCount: PropTypes.number.isRequired,
 };
 
-const useStyles = makeStyles((theme) => ({
+const useStyles = makeStyles(() => ({
     root: {
         width: '100%',
         height: '100%',

@@ -7,10 +7,10 @@ import {
 } from '@gooddata/sdk-model';
 import { DateFilter, DateFilterHelpers, defaultDateFilterOptions } from '@gooddata/sdk-ui-filters';
 import { Headline } from '@gooddata/sdk-ui-charts';
-import DashboardAreaChart from './DashboardAreaChart';
-import DashboardDataTable from './DashboardDataTable';
 import DateRangeIcon from '@material-ui/icons/DateRange';
 
+import DashboardAreaChart from './DashboardAreaChart';
+import DashboardDataTable from './DashboardDataTable';
 import DashboardBreadcrumbs from './DashboardBreadcrumbs';
 import * as Ldm from '../../ldm/full';
 import styles from './DashboardMain.module.scss';

@@ -3,10 +3,11 @@ import { AreaChart, Area, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContai
 import { numberFormat } from '@gooddata/numberjs';
 import { MeasureGroupIdentifier, newTwoDimensional } from '@gooddata/sdk-model';
 import { DataViewFacade } from '@gooddata/sdk-ui';
+
 import { workspace } from '../../constants';
 import { useBackend } from '../../contexts/Auth';
 
-const DashboardAreaChart = ({ measure, viewBy, stackBy, filters, handleAreaClick = (d, i) => {} }) => {
+const DashboardAreaChart = ({ measure, viewBy, stackBy, filters, handleAreaClick = () => {} }) => {
     const backend = useBackend();
 
     const [chartData, setChartData] = useState([]);
@@ -14,14 +15,6 @@ const DashboardAreaChart = ({ measure, viewBy, stackBy, filters, handleAreaClick
     const [series, setSeries] = useState([]);
     const [hoverDatum, setHoverDatum] = useState(null);
     const colors = ['#161E5E', '#223B89', '#316BA7', '#BEE0CC', '#419DC5', '#70C3D0'];
-
-    const handleMouseEnter = (d) => {
-        setHoverDatum(d);
-    };
-
-    const handleMouseLeave = () => {
-        setHoverDatum(null);
-    };
 
     useEffect(() => {
         const fetchData = async () => {
@@ -38,11 +31,9 @@ const DashboardAreaChart = ({ measure, viewBy, stackBy, filters, handleAreaClick
             const series = dataView.data().series().toArray();
 
             const data = dataView.dataView.data;
-            const datums = dataView.dataView.headerItems[0][0].map(
-                (item) => item['attributeHeaderItem'].name,
-            );
+            const datums = dataView.dataView.headerItems[0][0].map((item) => item.attributeHeaderItem.name);
             const categories = dataView.dataView.headerItems[1][1].map(
-                (item) => item['attributeHeaderItem'].name,
+                (item) => item.attributeHeaderItem.name,
             );
             const plots = data.map((row, i) => ({
                 xAxis: datums[i],
@@ -74,11 +65,9 @@ const DashboardAreaChart = ({ measure, viewBy, stackBy, filters, handleAreaClick
             >
                 <CartesianGrid strokeDasharray="3 3" />
                 <XAxis dataKey="xAxis" />
-                <YAxis
-                    tickFormatter={(value) => numberFormat(value, measureFormat)}
-                />
+                <YAxis tickFormatter={(value) => numberFormat(value, measureFormat)} />
                 <Tooltip
-                    itemSorter={(item) => item.name.toString().charCodeAt(0) * -1}
+                    itemSorter={(item) => item.name.charCodeAt(0) * -1}
                     formatter={(value) => numberFormat(value, measureFormat)}
                 />
                 {series.map((d, i) => {
@@ -92,8 +81,8 @@ const DashboardAreaChart = ({ measure, viewBy, stackBy, filters, handleAreaClick
                             fillOpacity={d === hoverDatum ? 1 : 0.65}
                             key={i}
                             onClick={() => handleAreaClick(d, i)}
-                            onMouseEnter={() => handleMouseEnter(d)}
-                            onMouseLeave={() => handleMouseLeave()}
+                            onMouseEnter={() => setHoverDatum(d)}
+                            onMouseLeave={() => setHoverDatum(null)}
                         />
                     );
                 })}
