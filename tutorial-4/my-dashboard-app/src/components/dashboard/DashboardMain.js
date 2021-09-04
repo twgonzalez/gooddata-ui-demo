@@ -234,8 +234,10 @@ const DashboardMain = ({ dimensionItem }) => {
                     measure={selectedMeasure}
                     viewBy={chartDateGrain}
                     stackBy={dimension}
-                    filters={[dateFilter, attributeFilter]}
+                    dateFilter={dateFilter}
+                    attributeFilter={attributeFilter}
                     handleAreaClick={handleAreaClick}
+                    isDrillable={isDrillable()}
                 />
             </div>
             <div className={styles.Table}>

@@ -10,7 +10,7 @@ const DashboardDataTable = ({ measures, dimensions, filters, handleRowClick }) =
             {(execution) => {
                 const { isLoading, error, result } = execution;
                 if (isLoading) {
-                    return <div>Loading data…</div>;
+                    return <div style={{ lineHeight: '300px' }}>Loading data…</div>;
                 }
 
                 if (error) {
